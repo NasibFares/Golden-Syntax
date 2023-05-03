@@ -1,6 +1,5 @@
-package Inventory.Clothes
-
-import Inventory.Products
+package inventory.clothes
+import inventory.Products
 
 class ClothingProducts(
     name: String, category: String,
