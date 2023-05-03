@@ -32,13 +32,15 @@ fun registerOrlogin(customer: Customers) {
             //Hier müssen alle persönlichen Informationen zur Userliste hinzugefügt
         }
 
-    }else{                                             //Anmelden
+
+    } /*else{                                             //Anmelden
         do {
             println("Geben Sie bitte Ihre E-mail Adresse ein")
-            if ()
-        }while ()
+            //if ()
+       // }while ()
 
 
         println("Geben Sie bitte Ihr Kennwort ein")
-    }
+   }
+   */
 }
