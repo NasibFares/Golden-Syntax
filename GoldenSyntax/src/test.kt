@@ -22,20 +22,21 @@ fun main() {
     println(myProduct.evaluation)
     //val myClothes = Clot("T-Shirt", 14.85, 5.0, Categories.Clothes, Subcategories.TShirts)
     //println(myClothes.evaluation)
-    val myTv=TVs("Samsung",450.0,2.0,Categories.Electronics,Subcategories.TVs,40.0,"HD")
-    val kunde:Customers=Customers("Nasib",45,"Karte")
+    val myTv = TVs("Samsung", 450.0, 2.0, Categories.Electronics, Subcategories.TVs, "HD", 40)
+    val kunde: Customers = Customers("Nasib", 45, "Karte")
     kunde.addToCart(myTv)
-    val myMobile=Mobiles("Nokia",450.0,3.0,Categories.Electronics,Subcategories.Mobiles,64,"Rot")
+    val myMobile = Mobiles("Nokia", 450.0, 3.0, Categories.Electronics, Subcategories.Mobiles, "64GB", "Rot")
     kunde.addToCart(myMobile)
-    val productsCard:Products
+    val productsCard: Products
     println("Ihr Warenkorb:")
-    for(i in kunde.cart.indices) {
+    for (i in kunde.cart.indices) {
         println(kunde.cart[i].name)
         println(kunde.cart[i].category)
         println(kunde.cart[i].subCategory)
         println(kunde.cart[i].price)
         println(kunde.cart[i].evaluation)
     }
+
 
 }
 
@@ -74,3 +75,4 @@ fun main() {
         println("Geben Sie bitte Ihr Kennwort ein")
  }
    */
+
