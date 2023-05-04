@@ -1,6 +1,13 @@
 import produkte.products.Products
 import benutzer.Customers
-class Store(val name: String, val minAge: Int, var products: MutableList<Products> = mutableListOf(), var customers: MutableList<Customers> = mutableListOf()) {
+import produkte.products.electronics.Mobiles
+
+class Store(
+    val name: String,
+    val minAge: Int,
+    val products: MutableList<Products> = mutableListOf<Products>(),
+    var customers: MutableList<Customers> = mutableListOf()
+) {
     fun addProduct(product: Products) {
         products.add(product)
     }

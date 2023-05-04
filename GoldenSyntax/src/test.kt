@@ -1,6 +1,9 @@
+import benutzer.Customers
 import produkte.Categories
 import produkte.products.Products
 import produkte.Subcategories
+import produkte.products.electronics.Mobiles
+import produkte.products.electronics.TVs
 
 
 fun main() {
@@ -17,8 +20,23 @@ fun main() {
     val myProduct = Products("Samsung", 230.0, 3.0, Categories.Electronics, Subcategories.Mobiles)
     myProduct.addReview("5")
     println(myProduct.evaluation)
-    val myClothes = Products("T-Shirt", 14.85, 5.0, Categories.Clothes, Subcategories.TShirts)
-    println(myClothes.evaluation)
+    //val myClothes = Clot("T-Shirt", 14.85, 5.0, Categories.Clothes, Subcategories.TShirts)
+    //println(myClothes.evaluation)
+    val myTv=TVs("Samsung",450.0,2.0,Categories.Electronics,Subcategories.TVs,40.0,"HD")
+    val kunde:Customers=Customers("Nasib",45,"Karte")
+    kunde.addToCart(myTv)
+    val myMobile=Mobiles("Nokia",450.0,3.0,Categories.Electronics,Subcategories.Mobiles,64,"Rot")
+    kunde.addToCart(myMobile)
+    val productsCard:Products
+    println("Ihr Warenkorb:")
+    for(i in kunde.cart.indices) {
+        println(kunde.cart[i].name)
+        println(kunde.cart[i].category)
+        println(kunde.cart[i].subCategory)
+        println(kunde.cart[i].price)
+        println(kunde.cart[i].evaluation)
+    }
+
 }
 
 /*fun registerOrlogin() {
