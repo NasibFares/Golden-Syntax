@@ -8,6 +8,6 @@ class TShirts(
     name: String, price: Double, evaluation: Double = 0.0,
     category: Categories,
     subCategory: Subcategories, val gender: List<String> = listOf("Men", "Women","Children"),
-    val size:List<String> = listOf("S","M","L","Xl","XXl","XXXl")
+    val size:List<String> = listOf("S","M","L","Xl","XXl","XXXl"),val colour:String
 ) : Products(name, price, evaluation, category, subCategory) {
 }
