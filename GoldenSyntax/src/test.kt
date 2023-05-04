@@ -1,5 +1,5 @@
 import produkte.Categories
-import produkte.Products
+import produkte.products.Products
 import produkte.Subcategories
 
 
