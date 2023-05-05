@@ -7,15 +7,37 @@ import produkte.products.electronics.TVs
 
 
 fun main() {
+    println(
+        "Herzlichen Willkommen in unserem [Golden-Syntax] online-shop:\n" +
+                "Wählen Sie bitte eine Option aus:\n1.Registrieren\n2.Anmelden"
+    )
+    var wahl: Int = 0
+    if (wahl == 2) {                                                //Anmelden
+    println("Geben Sie bitte eine gültige e-Mail Adresse ein")
+    }
+        println("Geben Sie bitte Ihren Vornamen ein")
+        firstname = readln()
+        println("Geben Sie bitte Ihren Nachnamen ein")
+        lastname=readln()
+        println("Geben Sie bitte Ihre E-main Adresse ein:")
+        email = readln()
+        println("Geben Sie bitte Ihr Alter ein:")
+        customer.alter = readln().toInt()
+        if (customer.alter < 12) {
+            println("Wir entschuldigen uns, Sie dürfen bei uns nicht registrieren.")
+        } else {
+            customer.usersEmails.add(customer.eMail)
+            customer.usersPasswords.add(customer.usersEmails.indexOf(customer.eMail),customer.password)
+        }
+        println("${customer.usersEmails} ${customer.password}")
 
-
-
-println("Gib deine E-Mail Adresse ein")
-    val email=readln()
-     isValidEmail(email)
-    val check=isValidEmail(email)
+    println("Gib deine E-Mail Adresse ein")
+    val email = readln()
+    isValidEmail(email)
+    val check = isValidEmail(email)
     println(check)
 }
+
 fun isValidEmail(email: String): Boolean {
     val emailPattern = Regex("^[a-z\\d.]+@[a-z\\d]+\\.[a-z]{2,}\$")
     return emailPattern.matches(email)
