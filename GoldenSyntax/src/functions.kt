@@ -73,6 +73,8 @@ fun register() {
     var attempts = 0
     var firstName: String? = ""
     var lastName: String? = ""
+    var ageTemp: String?
+    var age: Int? = 0
     while (attempts < maxAttempts) {
         //Eingabe des Vornamens des Benutzers
         println("Geben Sie bitte Ihren Vornamen ein")
@@ -100,9 +102,9 @@ fun register() {
         if (lastName.isNullOrEmpty() || !lastName.all { it.isLetter() }) {
             println("Eingabe darf nicht leer oder null oder Zahlen sein.")
             attempts++
-        //Sonst
+            //Sonst
         } else {
-            println("Ihr Nachname lautet: [$firstName]")
+            println("Ihr Nachname lautet: [$lastName]")
             customer.lastName = lastName
             break
         }
@@ -110,16 +112,32 @@ fun register() {
     if (lastName.isNullOrEmpty() || !lastName.all { it.isLetter() }) {
         println("Sie haben die maximale Anzahl an Versuchen überschritten.")
     }
-    //Eingabe des Alters des Benutzers
-    println("Geben Sie bitte Ihr Alter ein:")
-    val age = readln().toIntOrNull() ?: 0
-    //Falls der Benutzer unter 12 Jahre alt ist:
-    if (customer.age < 12) {
-        println("Wir entschuldigen uns, Sie dürfen bei uns nicht registrieren.")
-    //Sonst:
-    }else{
-        customer.age=age
+    while (attempts < maxAttempts) {
+        //Eingabe des Alters des Benutzers
+        println("Geben Sie bitte Ihr Alter ein:")
+        ageTemp = readln()
+        if (ageTemp.all { it.isLetter() } || ageTemp.isNullOrEmpty()) {
+            println("Diese Eingabe darf nicht leer oder null oder Buchstaben sein!!")
+        } else if (!ageTemp.all { it.isLetter() }) {
+            age = ageTemp.toInt()
+            //Falls der Benutzer unter 12 Jahre alt ist:
+            if (age < 12) {
+                println("Wir entschuldigen uns, Sie dürfen bei uns nicht registrieren.")
+                break
+                //Sonst
+            } else {
+                customer.age = age
+            }
+        } else {
+            println("Ihr Alter ist:$age ")
+            break
+        }
     }
+    attempts++
+    if (attempts == maxAttempts) {
+        println("Sie haben die maximale Anzahl an Versuchen überschritten.")
+    }
+
     //Eingabe der E-Mail-Adresse des Benutzers
     println("Geben Sie bitte Ihre E-Mail Adresse ein:")
     val email = readln()
@@ -128,7 +146,7 @@ fun register() {
     customer.eMail = email
 
 
-        userList.usersList.add(customer)
+    userList.usersList.add(customer)
 
 }
 
