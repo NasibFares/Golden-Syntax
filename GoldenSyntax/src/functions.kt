@@ -52,7 +52,7 @@ Allererstes
             }
         } else if (wahl == 2) {
 
-            register()
+            register()  //Die Methode register wird aufgerufen.
 
         } else if (wahl == 3) {
             //Hier kommt der Code der Abmeldung.
@@ -74,7 +74,8 @@ fun register() {
     var firstName: String? = ""
     var lastName: String? = ""
     while (attempts < maxAttempts) {
-        println("Geben Sie bitte Ihren Vornamen ein")              //Eingabe des Vornamens des Benutzers
+        //Eingabe des Vornamens des Benutzers
+        println("Geben Sie bitte Ihren Vornamen ein")
         firstName = readln()
         //Falls die Eingabe leer oder null oder nicht Buchstaben ist
         if (firstName.isNullOrEmpty() || !firstName.all { it.isLetter() }) {
@@ -92,11 +93,14 @@ fun register() {
     }
 
     while (attempts < maxAttempts) {
-        println("Geben Sie bitte Ihren Nachnamen ein")//Nachname des Benutzers
+        //Eingabe des Nachnamens des Benutzers.
+        println("Geben Sie bitte Ihren Nachnamen ein:")
         lastName = readln()
+        //Falls die Eingabe leer oder null oder nicht Buchstaben ist.
         if (lastName.isNullOrEmpty() || !lastName.all { it.isLetter() }) {
             println("Eingabe darf nicht leer oder null oder Zahlen sein.")
             attempts++
+        //Sonst
         } else {
             println("Ihr Nachname lautet: [$firstName]")
             customer.lastName = lastName
@@ -106,27 +110,34 @@ fun register() {
     if (lastName.isNullOrEmpty() || !lastName.all { it.isLetter() }) {
         println("Sie haben die maximale Anzahl an Versuchen überschritten.")
     }
-
-    println("Geben Sie bitte Ihre E-Mail Adresse ein:")//E-Mail-Adresse des Benutzers
-    val email = readln()
-    checkRegisterInfo(email, userList, customer)
-    customer.eMail = email
-    println("Geben Sie bitte Ihr Alter ein:")//Das Alter des Benutzers
+    //Eingabe des Alters des Benutzers
+    println("Geben Sie bitte Ihr Alter ein:")
     val age = readln().toIntOrNull() ?: 0
-    customer.age = age
+    //Falls der Benutzer unter 12 Jahre alt ist:
     if (customer.age < 12) {
         println("Wir entschuldigen uns, Sie dürfen bei uns nicht registrieren.")
-    } else {
+    //Sonst:
+    }else{
+        customer.age=age
+    }
+    //Eingabe der E-Mail-Adresse des Benutzers
+    println("Geben Sie bitte Ihre E-Mail Adresse ein:")
+    val email = readln()
+    //Die Methode 'checkRegisterInfo' wird aufgerufen:
+    checkRegisterInfo(email, userList, customer)
+    customer.eMail = email
+
 
         userList.usersList.add(customer)
-    }
+
 }
 
 fun checkRegisterInfo(
     eMail: String,
     userList: Users,
     customer: Customers
-) { //Überprüfen, ob die E-Mail gültig und nicht schon Verwendet
+) {
+    //Überprüfen, ob die E-Mail gültig und nicht schon Verwendet
     val checkValidity = isValidEmail(eMail)
 
     if (!userList.usersList.any { it.eMail == eMail } && checkValidity) {//E-Mail ist nicht in der Liste und ist gültig.
