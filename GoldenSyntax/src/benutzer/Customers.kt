@@ -16,16 +16,21 @@ open class Customers(
 
     /*
     Die Methode 'addToCart' ermöglicht dem Kunden, die lieblingsprodukte in Warenkorb hinzufügen.
-    Als Parameter übernimmt die Methode 'product→'
+    Als Parameter übernimmt diese Methode 'product→ bezieht sich auf ein Produkt von der Liste Produkte'
      */
     fun addToCart(product: Products) {
         cart.add(product)
     }
-
+    /*
+     Die Methode 'removeFromCart' ermöglicht dem Kunden, ein Produkt im Warenkorb zu löschen.
+     Als Parameter übernimmt diese Methode 'product→ bezieht sich auf eine produkt von der Liste Produkte'
+         */
     fun removeFromCart(product: Products) {
         cart.remove(product)
     }
-
+    /*
+     Die Methode 'getCartTotal' berechnet den Gesamtpreis für die Produkte im Warenkorb und gibt den Preis zurück.
+             */
     fun getCartTotal(): Double {
         return cart.sumOf { it.price }
     }

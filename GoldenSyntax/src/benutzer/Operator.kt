@@ -1,4 +1,0 @@
-package benutzer
-
-class Operator {
-}
