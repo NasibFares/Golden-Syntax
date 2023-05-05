@@ -9,10 +9,7 @@ import kotlin.concurrent.thread
 
 
 
-fun isValidEmail(email: String): Boolean {
-    val emailPattern = Regex("^[a-z\\d.]+@[a-z\\d]+\\.[a-z]{2,}\$")
-    return emailPattern.matches(email)
-}
+
 
 /*fun registerOrlogin() {
 
