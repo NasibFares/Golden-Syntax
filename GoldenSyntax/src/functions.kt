@@ -142,8 +142,6 @@ fun register() {
     println("Geben Sie bitte Ihre E-Mail Adresse ein:")
     val email = readln()
     //Die Methode 'checkRegisterInfo' wird aufgerufen:
-    checkEmailInfo(email, userList, customer)
-    customer.eMail = email
 
 
     userList.usersList.add(customer)
@@ -151,49 +149,73 @@ fun register() {
 }
 
 /*
-Die Methode 'isValidEmail' Überprüft, ob die E-Mail-Adresse gültig.
-Als Parameter übernimmt dei Methode die Variable 'email'
+-----------------------------------------------------e-Mail-------------------------------------------------------
+In dieser Abteilung werden drei Methoden gebaut:
+1-Die Methode 'isValidEmail' Überprüft, ob die E-Mail-Adresse gültig.
+Diese Methode hat die Parameter 'email→String' und überprüft, ob die vom Benutzer eingegebene E-Mail das Muster
+der E-Mail entspricht oder nicht.
+'matches' wird verwendet, um der Vergleich zwischen 'email' und 'Muster' auszuführen, sie gibt zurück 'false' oder 'true'.
+2-Die Methode isEmailRegisted:
+Diese Methode hat die Parameters 'user→ List<Users>', 'email→ String'
+Sie überprüft, ob die vom Benutzer eingegebene E-Mail schon registriert oder nicht.
+Sie gibt zurück 'false' wenn nicht und 'true' wenn ja.
+3-Die Methode 'checkEmailInfo', ruft die Methode, 'isValidEmail' auf und überprüft zusätzlich, ob die E-Mail
+ schon registriert oder nicht.
  */
 fun isValidEmail(email: String): Boolean {
     val emailPattern = Regex("^[a-z\\d.]+@[a-z\\d]+\\.[a-z]{2,}\$")
     return emailPattern.matches(email)
 }
 
-/*
-Die Methode 'checkEmailInfo', ruft die Methode, 'isValidEmail' auf und überprüft zusätzlich, ob die E-Mail
- schon registriert oder nicht.
- */
+fun isEmailRegisted(users: List<Users>, email: String): Boolean {
+    for (user in users) {
+        if (user.eMail == email) {
+            return true
+        }
+    }
+    return false
+}
+
 fun checkEmailInfo(
-    eMail: String,
-    userList: Users,
-    customer: Customers
+    users: MutableList<Users>,
 ) {
+    var user = Users("", "", "", "")
+    var trials = 0
+    var maxTrials = 3
+    var email: String = ""
 
-    val checkValidity = isValidEmail(eMail)
-
-    if (!userList.usersList.any { it.eMail == eMail } && checkValidity) {//E-Mail ist nicht in der Liste und ist gültig.
-        userList.usersList.add(customer)
-
+    while (trials < maxTrials) {
+        println("Geben Sie bitte eine gültige e-Mail Adresse ein: ")
+        email = readln()
+        val checkValidity = isValidEmail(email)
+        val checkExistence = isEmailRegisted(users, email)
+        if (checkExistence || !checkValidity) {
+            println("Ungültige e-Mail Adresse")
+            trials++
+        } else if (!checkExistence && checkValidity) {
+            println("Ihre e-Mail Adresse ist $email")
+            user.eMail = email
+            break
+        }
     }
-    while (userList.usersList.any { it.eMail == eMail }) {
-        println("Die E-Mail Adresse existiert schon in der Datenbank.!!")
-        break
-    }
-    while (!checkValidity) {
-        println("Die E-Mail Adresse ist nicht gültig.")
-        break
+    if (trials == maxTrials) {
+        println("Sie haben die Anzahl der Versuche überschritten!!!!")
     }
 }
 
-
+/*
+-----------------------------------------------------Kennwort-------------------------------------------------------
+*/
 fun istValidPassword(password: String): Boolean {
     val passwordPattern = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")
     return passwordPattern.matches(password)
 }
+
 /*
+-------------------------------------------------------Alter--------------------------------------------------------
 In dieser Abteilung werden zwei Methoden gebaut.
 1-Die Methode 'isAgeValid':
-in dieser Methode wird 'age' zuerst als 'String' definiert, um zu prüfen, ob die Eingabe 'age' leer,null,oder aber
+in dieser Methode wird 'age' zuerst als 'String' definiert, um zu prüfen, ob die Eingabe 'age' leer, null, oder aber
 Buchstaben ist.
 Falls nicht, wird die Eingabe in 'Int' umgewandelt, um zu prüfen, ob sie weniger als 12 ist.
 Falls nicht, nimmt die Variable 'ageValid: Boolean' den Wert 'true', dieser Wert wird zurückgegeben.
@@ -221,9 +243,10 @@ fun isAgeValid(): Boolean {
     }
     return ageValid
 }
+
 fun customerAge() {
     var trials = 0
-    val maxTrials = 2
+    val maxTrials = 3
     while (trials < maxTrials) {
         if (!isAgeValid()) {
             trials++
