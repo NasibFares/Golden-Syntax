@@ -10,11 +10,11 @@ class Customers(
     firstName: String,
     lastName: String,
     eMail: String,
+    age: Int,
     passWord: String,
-    var age: Int,
     val paymentMethod: String,
     var cart: MutableList<Products> = mutableListOf()
-) : Users(firstName, lastName, eMail, passWord) {
+) : Users(firstName, lastName, eMail, age,passWord) {
     var accountBalance: Double = 0.0
 
     /*

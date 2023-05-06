@@ -8,6 +8,7 @@ open class Users(
     var firstName: String,
     var lastName: String,
     var eMail: String,
+    var age:Int,
     val passWord: String,
 
 

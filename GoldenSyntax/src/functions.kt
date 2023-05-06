@@ -1,6 +1,7 @@
 import benutzer.Customers
 import benutzer.Users
-
+var user=Users("","","",0,"")
+var userList: MutableList<Users> = mutableListOf()
 fun main() {
 
 }
@@ -52,7 +53,7 @@ Allererstes
             }
         } else if (wahl == 2) {
 
-            register()  //Die Methode register wird aufgerufen.
+            register()
 
         } else if (wahl == 3) {
             //Hier kommt der Code der Abmeldung.
@@ -66,101 +67,144 @@ Allererstes
     }
 }
 
+/*
+----------------------------------------------------Registrierung-----------------------------------------------------
+ Die Methode 'register' ruft verschiedenen Methoden auf, die zu Registrierung gehören.
+ Jede Methode wird ausgeführt, wenn die vorherige Methode vom Benutzer richtig ausgeführt ist.
+ z.B wenn der Benutzer sein Name richtig eingegeben hat, wird die Methode checkNachname ausgeführt.
+ */
 fun register() {
-    var customer = Customers("", "", "", "", 0, "")
-    var userList = Users("", "", "", "")
-    val maxAttempts = 2
-    var attempts = 0
-    var firstName: String? = ""
-    var lastName: String? = ""
-    var ageTemp: String?
-    var age: Int? = 0
-    while (attempts < maxAttempts) {
-        //Eingabe des Vornamens des Benutzers
-        println("Geben Sie bitte Ihren Vornamen ein")
-        firstName = readln()
-        //Falls die Eingabe leer oder null oder nicht Buchstaben ist
-        if (firstName.isNullOrEmpty() || !firstName.all { it.isLetter() }) {
-            println("Eingabe darf nicht leer oder null oder Zahlen sein.")
-            attempts++
 
-        } else {
-            println("Ihr Vorname lautet: [$firstName]")
-            customer.firstName = firstName
-            break
+    val users: MutableList<Users> = mutableListOf()
+
+    if (checkFirstName()) {
+        if (checkLastName()) {
+            if (customerAge()) {
+                if (checkEmailInfo(users)) {
+                    if (checkPassword()) {
+                        println("Sie haben erfolgreich registriert:")
+                        println("1.Vorname:${user.firstName}")
+                        println("2.Nachname:${user.lastName}")
+                        println("3.e-Mail:${user.eMail}")
+                        println("4.Alter:${user.age}")
+                    }
+                }
+            }
         }
     }
-    if (firstName.isNullOrEmpty() || !firstName.all { it.isLetter() }) {
-        println("Sie haben die maximale Anzahl an Versuchen überschritten.")
+
+}
+/*
+--------------------------------------------------Vorname/Nachname---------------------------------------------------
+ */
+
+fun checkFirstName(): Boolean {
+    var trials = 0
+    var maxTrials = 3
+    while (trials < maxTrials) {
+        println("Geben Sie bitte Ihren Vorname ein:")
+        var firstName = readln()
+        if (firstName.isNullOrEmpty() || !firstName.all { it.isLetter() }) {
+            println("Der Vorname darf nicht null,leer oder Zahlen sein!!")
+            trials++
+        } else {
+            println("Ihr Vorname ist:$firstName")
+            user.firstName=firstName
+            userList.add(user)
+
+            return true
+        }
     }
-    attempts = 0
-    while (attempts < maxAttempts) {
-        //Eingabe des Nachnamens des Benutzers.
+    println("Sie haben die maximale Anzahl an Versuchen überschritten!!")
+    return false
+}
+
+fun checkLastName(): Boolean {
+    var trials = 0
+    var maxTrials = 3
+    while (trials < maxTrials) {
         println("Geben Sie bitte Ihren Nachnamen ein:")
-        lastName = readln()
-        //Falls die Eingabe leer oder null oder nicht Buchstaben ist.
+        var lastName = readln()
         if (lastName.isNullOrEmpty() || !lastName.all { it.isLetter() }) {
-            println("Eingabe darf nicht leer oder null oder Zahlen sein.")
-            attempts++
-            //Sonst
+            println("Der Nachname darf nicht null,leer oder Zahlen sein!!")
+            trials++
         } else {
-            println("Ihr Nachname lautet: [$lastName]")
-            customer.lastName = lastName
-            break
+            println("Ihr Nachname ist:$lastName")
+            user.lastName=lastName
+            userList.add(user)
+            return true
         }
     }
-    if (lastName.isNullOrEmpty() || !lastName.all { it.isLetter() }) {
-        println("Sie haben die maximale Anzahl an Versuchen überschritten.")
+
+    println("Sie haben die maximale Anzahl an Versuchen überschritten!!")
+    return false
+}
+
+
+/*
+-------------------------------------------------------Alter--------------------------------------------------------
+In dieser Abteilung werden zwei Methoden gebaut.
+1-Die Methode 'isAgeValid':
+in dieser Methode wird 'age' zuerst als 'String' definiert, um zu prüfen, ob die Eingabe 'age' leer, null, oder aber
+Buchstaben ist.
+Falls nicht, wird die Eingabe in 'Int' umgewandelt, um zu prüfen, ob sie weniger als 12 ist.
+Falls nicht, nimmt die Variable 'ageValid: Boolean' den Wert 'true', dieser Wert wird zurückgegeben.
+
+2-Die Methode 'customerAge':
+diese Methode übernimmt den Wert 'ageValid' von der Methode 'isAgeValid' und überprüft, ob er 'false' oder 'true' ist.
+Diese Methode verfügt eine While-Schleife, um dem Benutzer zu ermöglichen, die Eingabe wieder einzugeben, wenn sie
+falsch ist.
+ */
+fun isAgeValid(): Int?{
+    println("Geben Sie bitte Ihr Alter ein:")
+    var age = readln()
+    if (age.isNullOrEmpty() || age.all { it.isLetter() }) {
+        println("Das Alter darf nicht null oder leer oder Buchstaben sein.")
+        return null
+    } else if (age.toInt() < 12) {
+        println("Wir entschuldigung uns, als unter 12 dürfen Sie nicht registrieren!!")
+        return null
+    } else {
+        return age.toInt()
     }
-    attempts = 0
-    while (attempts < maxAttempts) {
-        //Eingabe des Alters des Benutzers
-        println("Geben Sie bitte Ihr Alter ein:")
-        ageTemp = readln()
-        if (ageTemp.all { it.isLetter() } || ageTemp.isNullOrEmpty()) {
-            println("Diese Eingabe darf nicht leer oder null oder Buchstaben sein!!")
-        } else if (!ageTemp.all { it.isLetter() }) {
-            age = ageTemp.toInt()
-            //Falls der Benutzer unter 12 Jahre alt ist:
-            if (age < 12) {
-                println("Wir entschuldigen uns, Sie dürfen bei uns nicht registrieren.")
-                //Sonst
-            } else {
-                customer.age = age
+}
+
+fun customerAge(): Boolean {
+    var trials = 0
+    val maxTrials = 3
+
+    while (trials < maxTrials) {
+        val age=isAgeValid()
+        if (age==null) {
+            trials++
+            if (trials < maxTrials) {
+                println("Wiederholen Sie bitte die Eingabe")
             }
         } else {
-            println("Ihr Alter ist:$age ")
-            break
+            user.age=age
+            userList.add(user)
+            return true
         }
     }
-    attempts++
-    if (attempts == maxAttempts) {
-        println("Sie haben die maximale Anzahl an Versuchen überschritten.")
-    }
-
-    //Eingabe der E-Mail-Adresse des Benutzers
-    println("Geben Sie bitte Ihre E-Mail Adresse ein:")
-    val email = readln()
-    //Die Methode 'checkRegisterInfo' wird aufgerufen:
-
-
-    userList.usersList.add(customer)
-
+    println("Sie haben die maximale Anzahl an Versuchen überschritten!!")
+    return false
 }
 
 /*
 -----------------------------------------------------e-Mail-------------------------------------------------------
 In dieser Abteilung werden drei Methoden gebaut:
-1-Die Methode 'isValidEmail' Überprüft, ob die E-Mail-Adresse gültig.
+1-Die Methode 'isValidEmail':
 Diese Methode hat die Parameter 'email→String' und überprüft, ob die vom Benutzer eingegebene E-Mail das Muster
 der E-Mail entspricht oder nicht.
 'matches' wird verwendet, um der Vergleich zwischen 'email' und 'Muster' auszuführen, sie gibt zurück 'false' oder 'true'.
-2-Die Methode isEmailRegisted:
+
+2-Die Methode 'isEmailRegisted':
 Diese Methode hat die Parameters 'user→ List<Users>', 'email→ String'
 Sie überprüft, ob die vom Benutzer eingegebene E-Mail schon registriert oder nicht.
 Sie gibt zurück 'false' wenn nicht und 'true' wenn ja.
-3-Die Methode 'checkEmailInfo', ruft die Methode, 'isValidEmail' auf und überprüft zusätzlich, ob die E-Mail
- schon registriert oder nicht.
+
+3-Die Methode 'checkEmailInfo':
+Sie ruft die Methode, 'isValidEmail' auf und überprüft zusätzlich, ob die E-Mail schon registriert oder nicht.
  */
 fun isValidEmail(email: String): Boolean {
     val emailPattern = Regex("^[a-z\\d.]+@[a-z\\d]+\\.[a-z]{2,}\$")
@@ -178,8 +222,7 @@ fun isEmailRegisted(users: List<Users>, email: String): Boolean {
 
 fun checkEmailInfo(
     users: MutableList<Users>,
-) {
-    var user = Users("", "", "", "")
+): Boolean {
     var trials = 0
     var maxTrials = 3
     var email: String = ""
@@ -194,13 +237,14 @@ fun checkEmailInfo(
             trials++
         } else if (!checkExistence && checkValidity) {
             println("Ihre e-Mail Adresse ist $email")
-            user.eMail = email
-            break
+            user.eMail=email
+            userList.add(user)
+            return true
         }
     }
-    if (trials == maxTrials) {
-        println("Sie haben die Anzahl der Versuche überschritten!!!!")
-    }
+
+    println("Sie haben die maximale Anzahl an Versuchen überschritten!!")
+    return false
 }
 
 /*
@@ -211,55 +255,25 @@ fun istValidPassword(password: String): Boolean {
     return passwordPattern.matches(password)
 }
 
-/*
--------------------------------------------------------Alter--------------------------------------------------------
-In dieser Abteilung werden zwei Methoden gebaut.
-1-Die Methode 'isAgeValid':
-in dieser Methode wird 'age' zuerst als 'String' definiert, um zu prüfen, ob die Eingabe 'age' leer, null, oder aber
-Buchstaben ist.
-Falls nicht, wird die Eingabe in 'Int' umgewandelt, um zu prüfen, ob sie weniger als 12 ist.
-Falls nicht, nimmt die Variable 'ageValid: Boolean' den Wert 'true', dieser Wert wird zurückgegeben.
-2-Die Methode 'customerAge':
-diese Methode übernimmt den Wert 'ageValid' von der Methode 'isAgeValid' und überprüft, ob er 'false' oder 'true' ist.
-Diese Methode verfügt eine While-Schleife, um dem Benutzer zu ermöglichen, die Eingabe wieder einzugeben, wenn sie
-falsch ist.
- */
-fun isAgeValid(): Boolean {
-    var ageValid: Boolean
-
-    var customer = Customers("", "", "", "", 0, "")
-    println("Geben Sie bitte Ihr Alter ein:")
-    var age = readln()
-    if (age.isNullOrEmpty() || age.all { it.isLetter() }) {
-        ageValid = false
-        println("Das Alter darf nicht null oder leer oder Buchstaben sein.")
-    } else if (age.toInt() < 12) {
-        ageValid = false
-        println("Wir entschuldigung uns, als unter 12 dürfen Sie nicht registrieren!!")
-    } else {
-        ageValid = true
-        customer.age = age.toInt()
-
-    }
-    return ageValid
-}
-
-fun customerAge() {
+fun checkPassword(): Boolean {
     var trials = 0
-    val maxTrials = 3
+    var maxTrials = 3
     while (trials < maxTrials) {
-        if (!isAgeValid()) {
+        println("Geben Sie ein gültigen Kennwort [nicht mehr als 8 Character] ein:")
+        var passWord = readln()
+        var checkValidity = istValidPassword(passWord)
+        if (!checkValidity) {
+            println("Ihr Kennwort entspricht nicht die Bedienungen ")
             trials++
-            if (trials < maxTrials) {
-                println("Wiederholen Sie bitte die Eingabe")
-            }
         } else {
-            break
+            println("Ihr Kennwort wurde erfolgreich abgespeichert")
+            return true
         }
     }
-    if (trials == maxTrials) {
-        println("Sie haben die Anzahl der Versuche überschritten!!!!")
-    }
+
+    println("Sie haben die maximale Anzahl an Versuchen überschritten!! ")
+    return false
+
 }
 
 
