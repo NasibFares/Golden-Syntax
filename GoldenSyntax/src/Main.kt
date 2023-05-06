@@ -4,8 +4,9 @@ import kotlin.concurrent.thread
 
 fun main() {
 val user=Users("","","","")
-    registerOrLogin()
-    println(user.usersList)
+    //registerOrLogin()
+    //println(user.usersList)
+    customerAge()
 
 }
 

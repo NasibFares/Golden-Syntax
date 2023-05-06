@@ -93,7 +93,7 @@ fun register() {
     if (firstName.isNullOrEmpty() || !firstName.all { it.isLetter() }) {
         println("Sie haben die maximale Anzahl an Versuchen überschritten.")
     }
-
+    attempts = 0
     while (attempts < maxAttempts) {
         //Eingabe des Nachnamens des Benutzers.
         println("Geben Sie bitte Ihren Nachnamen ein:")
@@ -112,6 +112,7 @@ fun register() {
     if (lastName.isNullOrEmpty() || !lastName.all { it.isLetter() }) {
         println("Sie haben die maximale Anzahl an Versuchen überschritten.")
     }
+    attempts = 0
     while (attempts < maxAttempts) {
         //Eingabe des Alters des Benutzers
         println("Geben Sie bitte Ihr Alter ein:")
@@ -123,7 +124,6 @@ fun register() {
             //Falls der Benutzer unter 12 Jahre alt ist:
             if (age < 12) {
                 println("Wir entschuldigen uns, Sie dürfen bei uns nicht registrieren.")
-                break
                 //Sonst
             } else {
                 customer.age = age
@@ -142,7 +142,7 @@ fun register() {
     println("Geben Sie bitte Ihre E-Mail Adresse ein:")
     val email = readln()
     //Die Methode 'checkRegisterInfo' wird aufgerufen:
-    checkRegisterInfo(email, userList, customer)
+    checkEmailInfo(email, userList, customer)
     customer.eMail = email
 
 
@@ -150,12 +150,25 @@ fun register() {
 
 }
 
-fun checkRegisterInfo(
+/*
+Die Methode 'isValidEmail' Überprüft, ob die E-Mail-Adresse gültig.
+Als Parameter übernimmt dei Methode die Variable 'email'
+ */
+fun isValidEmail(email: String): Boolean {
+    val emailPattern = Regex("^[a-z\\d.]+@[a-z\\d]+\\.[a-z]{2,}\$")
+    return emailPattern.matches(email)
+}
+
+/*
+Die Methode 'checkEmailInfo', ruft die Methode, 'isValidEmail' auf und überprüft zusätzlich, ob die E-Mail
+ schon registriert oder nicht.
+ */
+fun checkEmailInfo(
     eMail: String,
     userList: Users,
     customer: Customers
 ) {
-    //Überprüfen, ob die E-Mail gültig und nicht schon Verwendet
+
     val checkValidity = isValidEmail(eMail)
 
     if (!userList.usersList.any { it.eMail == eMail } && checkValidity) {//E-Mail ist nicht in der Liste und ist gültig.
@@ -172,8 +185,59 @@ fun checkRegisterInfo(
     }
 }
 
-fun isValidEmail(email: String): Boolean {
-    val emailPattern = Regex("^[a-z\\d.]+@[a-z\\d]+\\.[a-z]{2,}\$")
-    return emailPattern.matches(email)
+
+fun istValidPassword(password: String): Boolean {
+    val passwordPattern = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")
+    return passwordPattern.matches(password)
 }
+/*
+In dieser Abteilung werden zwei Methoden gebaut.
+1-Die Methode 'isAgeValid':
+in dieser Methode wird 'age' zuerst als 'String' definiert, um zu prüfen, ob die Eingabe 'age' leer,null,oder aber
+Buchstaben ist.
+Falls nicht, wird die Eingabe in 'Int' umgewandelt, um zu prüfen, ob sie weniger als 12 ist.
+Falls nicht, nimmt die Variable 'ageValid: Boolean' den Wert 'true', dieser Wert wird zurückgegeben.
+2-Die Methode 'customerAge':
+diese Methode übernimmt den Wert 'ageValid' von der Methode 'isAgeValid' und überprüft, ob er 'false' oder 'true' ist.
+Diese Methode verfügt eine While-Schleife, um dem Benutzer zu ermöglichen, die Eingabe wieder einzugeben, wenn sie
+falsch ist.
+ */
+fun isAgeValid(): Boolean {
+    var ageValid: Boolean
+
+    var customer = Customers("", "", "", "", 0, "")
+    println("Geben Sie bitte Ihr Alter ein:")
+    var age = readln()
+    if (age.isNullOrEmpty() || age.all { it.isLetter() }) {
+        ageValid = false
+        println("Das Alter darf nicht null oder leer oder Buchstaben sein.")
+    } else if (age.toInt() < 12) {
+        ageValid = false
+        println("Wir entschuldigung uns, als unter 12 dürfen Sie nicht registrieren!!")
+    } else {
+        ageValid = true
+        customer.age = age.toInt()
+
+    }
+    return ageValid
+}
+fun customerAge() {
+    var trials = 0
+    val maxTrials = 2
+    while (trials < maxTrials) {
+        if (!isAgeValid()) {
+            trials++
+            if (trials < maxTrials) {
+                println("Wiederholen Sie bitte die Eingabe")
+            }
+        } else {
+            break
+        }
+    }
+    if (trials == maxTrials) {
+        println("Sie haben die Anzahl der Versuche überschritten!!!!")
+    }
+}
+
+
 
