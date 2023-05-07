@@ -8,10 +8,10 @@ open class Mobiles(
     name: String,
     price: Double,
     evaluation: Double = 0.0,
-    category: Categories,
-    subCategory: Subcategories,
+    category: Categories = Categories.Electronics,
+    subCategory: Subcategories = Subcategories.Mobiles,
     val storage: String,
-    val colour: String,
+    val color: String,
     val operatingSystem: String = listOf("Android", "IOS").random()
 ) : Products(name, price, evaluation, category, subCategory) {
 }

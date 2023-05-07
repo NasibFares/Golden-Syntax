@@ -1,4 +1,12 @@
 import benutzer.Users
+import produkte.Categories
+import produkte.Subcategories
+import produkte.products.clothes.TShirts
+import produkte.products.clothes.Shoes
+import produkte.products.clothes.Trousers
+import produkte.products.electronics.Mobiles
+import produkte.products.electronics.Microwaves
+import produkte.products.electronics.TVs
 import kotlin.system.exitProcess
 import java.io.File
 import java.io.FileWriter
@@ -65,7 +73,10 @@ fun registerLoginLogout(): Int {
         "Herzlichen Willkommen in unserem [Golden-Syntax] online-shop:\n" +
                 "-------------------------------------------------------------"
     )
+
     var wahl: Int
+    var trials = 0
+    val maxTrials = 3
     do {
         println("Wählen Sie eine Option aus:")
         println("1. Anmelden")
@@ -73,7 +84,13 @@ fun registerLoginLogout(): Int {
         println("3. Ausloggen")
         print("Eingabe: ")
         wahl = readlnOrNull()?.toIntOrNull() ?: 0
-    } while (wahl != 1 && wahl != 2 && wahl != 3)
+        trials++
+    } while (wahl != 1 && wahl != 2 && wahl != 3 && trials < maxTrials)
+
+    if (trials >= maxTrials) {
+        println("Sie haben die maximale Anzahl an Versuchen überschritten!!")
+        exitProcess(0)
+    }
 
     try {
         if (wahl == 1) {
@@ -405,7 +422,7 @@ fun operatorOption() {
     var trials = 0
     val maxTrials = 3
     do {
-        println("Wählen Sie eine Option aus:")
+        println("Wählen Sie eine Aufgabe aus:")
         println("1. Ein Produkt hinzufügen.")
         println("2. Ein Produkt löschen.")
         println("3. Produkte nachbestellen")
@@ -419,5 +436,96 @@ fun operatorOption() {
         exitProcess(0)
     }
 }
+/*
+----------------------------------------------1. Produkt hinzufügen----------------------------------------------------
+*/
+fun addNewProduct() {
+    print("Name des Produkts: ")
+    val name = readLine() ?: return
+
+    print("Preis des Produkts: ")
+    val price = readLine()?.toDoubleOrNull() ?: return
+
+    // Prompt the user to select a category
+    println("Die Kategorie des Produkts:")
+    Categories.values().forEachIndexed { index, category ->
+        println("${index + 1}. ${category.name}")
+    }
+    val categoryIndex = readlnOrNull()?.toIntOrNull()?.minus(1) ?: return
+    val category = Categories.values().getOrNull(categoryIndex) ?: return
+
+    // Prompt the user to select a subcategory
+    println("Die Unterkategorie des Produkts:")
+    category.subcategories.forEachIndexed { index, subcategory ->
+        println("${index + 1}. ${subcategory.name}")
+    }
+    val subcategoryIndex = readlnOrNull()?.toIntOrNull()?.minus(1) ?: return
+    val subcategory = category.subcategories.getOrNull(subcategoryIndex) ?: return
+
+    // Create the appropriate product based on the subcategory
+    val product = when (subcategory) {
+        Subcategories.Shoes -> {
+            print("Die Große der Schuhe: ")
+            val size = readlnOrNull()?.toDoubleOrNull() ?: return
+            print("Damen/Herren/Kinder: ")
+            val gender = readlnOrNull() ?: return
+            print("Die Farbe der Schuhe: ")
+            val color = readlnOrNull() ?: return
+            Shoes(name, price, category = category, subCategory = subcategory, size = size, gender = gender, color = color)
+
+        }
+        Subcategories.Trousers -> {
+            print("Große der Hose: ")
+            val size = readlnOrNull()?.toIntOrNull()  ?: return
+            print("Damen/Herren/Kinder: ")
+            val gender = readlnOrNull() ?: return
+            print("Farbe der Hose: ")
+            val color = readlnOrNull() ?: return
+            Trousers(name, price, category = category, subCategory = subcategory, size = size, gender = gender, color = color)
+
+        }
+        Subcategories.TShirts -> {
+            print("Die Große: (S,M,L,XL,XXL) ")
+            val size = readlnOrNull() ?: return
+            print("Damen/Herren/Kinder: ")
+            val gender = readlnOrNull() ?: return
+            print("Die Farbe: ")
+            val color = readlnOrNull() ?: return
+           TShirts(name, price, category = category, subCategory = subcategory, size = size, gender = gender, color = color)
+
+        }
+        Subcategories.Microwaves -> {
+            print("Die Kapazität der Mikrowelle: ")
+            val capacity = readlnOrNull() ?: return
+            print("Die Farbe der Mikrowelle: ")
+            val color = readlnOrNull() ?: return
+            print("Das Material der Mikrowelle: ")
+            val material = readlnOrNull() ?: return
+            print("Die Leistung der Mikrowelle (Watt): ")
+            val watt = readlnOrNull()?.toIntOrNull() ?: return
+            Microwaves(name, price, category = category, subCategory = subcategory, capacity = capacity, color = color, material = material, watt = watt)
+        }
+        Subcategories.Mobiles -> {
+            print("Die Kapazität des Handys: ")
+            val storage = readlnOrNull() ?: return
+            print("Die Farbe des Handys: ")
+            val color = readlnOrNull() ?: return
+            Mobiles(name, price, storage = storage, color = color)
+
+        }
+        Subcategories.TVs -> {
+            print("Die Auflösung des TV  (HD, UHD, 4K): ")
+            val resolution = readlnOrNull() ?: return
+            print("Die Große des TV: ")
+            val size = readlnOrNull()?.toIntOrNull() ?: return
+            TVs(name, price, category = category, subCategory = subcategory, resolution = resolution, size = size)
+        }
+        else -> return
+    }
+
+    // The product has been successfully created, you can add it to a list of products or store it in a database
+    println("Das Produkt wurde erfolgreich hinzugefügt!")
+}
+
 
 

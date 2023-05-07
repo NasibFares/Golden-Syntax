@@ -2,20 +2,16 @@ package produkte.products
 
 import produkte.Categories
 import produkte.Subcategories
-import produkte.products.clothes.Shoes
-import produkte.products.clothes.TShirts
-import produkte.products.clothes.Trousers
-import produkte.products.electronics.Microwaves
-import produkte.products.electronics.Mobiles
-import produkte.products.electronics.TVs
 
 /*
 Die Klasse 'Products' hat die Eigenschaften "name→ Name des Produkts", "price→ Preis des Produkts",
 "evaluation→ Rezension des Produkts", "category→ Kategorie des Produkts", "subcategory→ Unterkategorie des Produkts"
  */
 open class Products(
-    val name: String, val price: Double, var evaluation: Double = 0.0,
-    val category: Categories,
+    val name: String,
+    val price: Double,
+    var evaluation:Double = 0.0,
+    var category: Categories,
     val subCategory: Subcategories
 ) {
 
@@ -25,7 +21,7 @@ open class Products(
         evaluation = reviews.map { it.toDouble() }.average()
     }
 
-    val ourProducts: MutableList<Products> = mutableListOf(
+    /*val ourProducts: MutableList<Products> = mutableListOf(
         Mobiles(
             "Samsung Galaxy A24 4G", 200.0,
             3.4, Categories.Electronics, Subcategories.Mobiles, "128GB", "Green",
@@ -102,5 +98,5 @@ open class Products(
             "Kappa Sneaker", 25.99, 4.4, Categories.Clothes, Subcategories.Shoes,
             34.0, "Children", "Sport", "White"
         )
-    )
+    )*/
 }

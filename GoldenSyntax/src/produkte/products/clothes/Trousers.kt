@@ -5,8 +5,14 @@ import produkte.Subcategories
 import produkte.products.Products
 
 class Trousers(
-    name: String, price: Double, evaluation: Double = 0.0, category: Categories,
-    subCategory: Subcategories, val gender:String = listOf("Women","Men","Children").random(),val size: Int,val colour:String
+    name: String,
+    price: Double,
+    evaluation: Double = 0.0,
+    category: Categories = Categories.Clothes,
+    subCategory: Subcategories = Subcategories.Trousers,
+    val gender:String,
+    val size: Int,
+    val color:String
 ) : Products(name, price, evaluation, category, subCategory) {
 
 }

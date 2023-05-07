@@ -5,8 +5,14 @@ import produkte.Subcategories
 import produkte.products.Products
 
 class Microwaves(
-    name: String, price: Double, evaluation: Double = 0.0,
-    category: Categories,
-    subCategory: Subcategories, val capacity: String, val colour: String,val material:String,val watt: Int
+    name: String,
+    price: Double,
+    evaluation: Double = 0.0,
+    category: Categories = Categories.Electronics,
+    subCategory: Subcategories = Subcategories.Microwaves,
+    val capacity: String,
+    val color: String,
+    val material:String,
+    val watt: Int
 ) : Products(name, price, evaluation, category, subCategory) {
 }
