@@ -12,9 +12,10 @@ class Customers(
     eMail: String,
     age: Int,
     passWord: String,
+    adminRight:Boolean=false,
     val paymentMethod: String,
     var cart: MutableList<Products> = mutableListOf()
-) : Users(firstName, lastName, eMail, age,passWord) {
+) : Users(firstName, lastName, eMail, age,passWord, adminRight) {
     var accountBalance: Double = 0.0
 
     /*

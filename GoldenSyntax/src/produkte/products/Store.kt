@@ -1,3 +1,5 @@
+package produkte.products
+
 import produkte.products.Products
 import benutzer.Customers
 import produkte.products.electronics.Mobiles

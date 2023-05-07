@@ -9,5 +9,5 @@ open class Operators(
     age:Int,
     passWord: String,
     adminRight: Boolean,
-) : Users(firstName, lastName, eMail, age,passWord) {
+) : Users(firstName, lastName, eMail, age,passWord,adminRight) {
 }

@@ -8,11 +8,13 @@ open class Users(
     var firstName: String,
     var lastName: String,
     var eMail: String,
-    var age:Int,
+    var age: Int,
     val passWord: String,
+    val adminRight: Boolean
+
+) {
 
 
-    ) {
     var usersList: MutableList<Users> = mutableListOf()
 
 
