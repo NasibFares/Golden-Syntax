@@ -15,7 +15,8 @@ open class Products(
     val subCategory: Subcategories,
     var qty:Int=0
 ) {
-    val ourProducts: MutableList<Products> = mutableListOf()
+    var ourProducts: MutableList<Products> = mutableListOf()
+
     private var reviews = mutableListOf<String>() //z.B reviews=[2,4.4,5,]
     fun addReview(review: String) {
         reviews.add(review)

@@ -16,6 +16,85 @@ import java.io.BufferedReader
 
 var user = Users("", "", "", 0, "", false)
 var userList: MutableList<Users> = mutableListOf()
+var finalProductsList: MutableList<Products> = mutableListOf(
+    Mobiles(
+        "Samsung Galaxy A24 4G", 200.0,
+        3.4, Categories.Electronics, Subcategories.Mobiles, "128GB", "Green",
+        "Android"
+    ),
+    Mobiles(
+        "Huawei Enjoy 60X", 230.0, 4.1, Categories.Electronics, Subcategories.Mobiles,
+        "128GB", "Red", "Android"
+    ), Mobiles(
+        "Apple iPhone 14 Pro Max",
+        1294.38, 4.6, Categories.Electronics, Subcategories.Mobiles, "128GB",
+        "Black",
+        "IOS"
+    ), TVs(
+        "Fire TV 2-Series", 175.0, 3.6, Categories.Electronics,
+        Subcategories.TVs, "HD", 40
+    ), TVs(
+        "Sony Bravia", 799.0, 4.0,
+        Categories.Electronics, Subcategories.TVs, "4K", 50
+    ), TVs(
+        "Toshiba", 549.99, 4.0, Categories.Electronics, Subcategories.TVs,
+        "4K", 65
+    ),
+    Microwaves(
+        "Toshiba", 109.0, 4.4, Categories.Electronics, Subcategories.Microwaves,
+        "23L",
+        "Black", "Glass", 800
+    ),
+    Microwaves(
+        "Sharp", 96.89, 4.4, Categories.Electronics, Subcategories.Microwaves,
+        "20l", "Black", "Plastic", 2200
+    ), Microwaves(
+        "Bosch",
+        153.48,
+        4.6,
+        Categories.Electronics,
+        Subcategories.Microwaves,
+        "20L",
+        "stainless steel",
+        "stainless steel",
+        800
+    ), Trousers(
+        "Vans Leggings CHALKBOARD CLASSIC LEGGINGS", 34.99, 4.3, Categories.Clothes,
+        Subcategories.Trousers, "Women", 34, "Black"
+    ), Trousers(
+        "Tazzio Cargohose 16610 Stretch mit Elasthan, Regular Fit", 29.90, 4.3,
+        Categories.Clothes, Subcategories.Trousers, "Men", 36, "Braun"
+    ),
+    Trousers(
+        "Next Stoffhose Senior Tapered Trousers (1-tlg)", 19.0, 3.8, Categories.Clothes,
+        Subcategories.Trousers, "Children", 24, "Black"
+    ),
+    TShirts(
+        "Classic Basics Kurzarmshirt Shirt (1-tlg)", 9.0, 4.0,
+        Categories.Clothes, Subcategories.TShirts, "Women", "M", "Green"
+    ),
+    TShirts(
+        "Tommy Jeans Plus T-Shirt TJM PLUS ", 33.99, 4.1, Categories.Clothes,
+        Subcategories.TShirts, "Men", "XL", "Grey"
+    ),
+    TShirts(
+        "Converse Kurzarmshirt", 17.99, 3.8, Categories.Clothes, Subcategories.TShirts,
+        "Children", "S", "Red"
+    ),
+    Shoes(
+        "Vans Ward Sneaker", 63.99, 4.5, Categories.Clothes, Subcategories.Shoes,
+        36.5, "Women", "Sport", "Black"
+    ),
+    Shoes(
+        "SAGUARO Barfußschuh", 52.99, 4.0, Categories.Clothes, Subcategories.Shoes,
+        40.0, "Men", "Summer-Classic", "Black"
+    ),
+    Shoes(
+        "Kappa Sneaker", 25.99, 4.4, Categories.Clothes, Subcategories.Shoes,
+        34.0, "Children", "Sport", "White"
+    )
+)
+
 fun main() {
 
 }
@@ -437,6 +516,7 @@ fun operatorOption() {
         exitProcess(0)
     }
 }
+
 /*
 ----------------------------------------------1. Produkt hinzufügen----------------------------------------------------
 */
@@ -460,9 +540,9 @@ fun addNewProduct() {
     }
     val categoryIndex = readlnOrNull()?.toIntOrNull()?.minus(1) ?: return
     val category = Categories.values().getOrNull(categoryIndex) ?: return
-/*
---------------------------------1.4. Eine Unterkategorie muss ausgewählt werden----------------------------------------
- */
+    /*
+    --------------------------------1.4. Eine Unterkategorie muss ausgewählt werden----------------------------------------
+     */
     println("Die Unterkategorie des Produkts:")
     category.subcategories.forEachIndexed { index, subcategory ->
         println("${index + 1}. ${subcategory.name}")
@@ -472,26 +552,76 @@ fun addNewProduct() {
 
     // Ein passendes Produkt anhand der Unterkategorie erstellen.
     var product = when (subcategory) {
+
         Subcategories.Shoes -> {
-            print("Die Große der Schuhe: ")
-            val size = readlnOrNull()?.toDoubleOrNull() ?: return
-            print("Damen/Herren/Kinder: ")
-            val gender = readlnOrNull() ?: return
+            var sizeTrials = 0
+            var maxTrials = 2
+            var size: String = ""
+            var gender: String = ""
+            while (sizeTrials < maxTrials) {
+                print("Die Große der Schuhe: ")
+                size = readln()
+                if (size.isNullOrEmpty() || size.all { it.isLetter() } || size.toDouble() < 16.0) {
+                    sizeTrials++
+                    if (sizeTrials == maxTrials) {
+                        println("Sie haben die maximale Anzahl an Versuchen überschritten.")
+                        return
+                    } else {
+                        println("Ungültige Eingabe, versuchen Sie es erneut")
+                    }
+                } else {
+                    break
+                }
+            }
+            var genderTrials = 0
+            while (genderTrials < maxTrials) {
+                print("Schuhe für (Damen, Herren, Kinder): ")
+                gender = readln()
+                if (gender.isNullOrEmpty() || !gender.all { it.isLetter() }) {
+                    genderTrials++
+                    if (genderTrials == maxTrials) {
+                        println("Sie haben die maximale Anzahl an Versuchen überschritten.")
+                        return
+                    } else {
+                        println("Ungültige Eingabe, versuchen Sie es erneut")
+                    }
+                } else {
+                    break
+                }
+            }
             print("Die Farbe der Schuhe: ")
             val color = readlnOrNull() ?: return
-            Shoes(name, price, category = category, subCategory = subcategory, size = size, gender = gender, color = color)
+            Shoes(
+                name,
+                price,
+                category = category,
+                subCategory = subcategory,
+                size = size.toDouble(),
+                gender = gender,
+                color = color
+            )
 
         }
+
         Subcategories.Trousers -> {
             print("Große der Hose: ")
-            val size = readlnOrNull()?.toIntOrNull()  ?: return
+            val size = readlnOrNull()?.toIntOrNull() ?: return
             print("Damen/Herren/Kinder: ")
             val gender = readlnOrNull() ?: return
             print("Farbe der Hose: ")
             val color = readlnOrNull() ?: return
-            Trousers(name, price, category = category, subCategory = subcategory, size = size, gender = gender, color = color)
+            Trousers(
+                name,
+                price,
+                category = category,
+                subCategory = subcategory,
+                size = size,
+                gender = gender,
+                color = color
+            )
 
         }
+
         Subcategories.TShirts -> {
             print("Die Große: (S,M,L,XL,XXL) ")
             val size = readlnOrNull() ?: return
@@ -499,9 +629,18 @@ fun addNewProduct() {
             val gender = readlnOrNull() ?: return
             print("Die Farbe: ")
             val color = readlnOrNull() ?: return
-           TShirts(name, price, category = category, subCategory = subcategory, size = size, gender = gender, color = color)
+            TShirts(
+                name,
+                price,
+                category = category,
+                subCategory = subcategory,
+                size = size,
+                gender = gender,
+                color = color
+            )
 
         }
+
         Subcategories.Microwaves -> {
             print("Die Kapazität der Mikrowelle: ")
             val capacity = readlnOrNull() ?: return
@@ -511,21 +650,25 @@ fun addNewProduct() {
             val material = readlnOrNull() ?: return
             print("Die Leistung der Mikrowelle (Watt): ")
             val watt = readlnOrNull()?.toIntOrNull() ?: return
-            Microwaves(name, price, category = category, subCategory = subcategory, capacity = capacity, color = color,
-                material = material, watt = watt)
+            Microwaves(
+                name, price, category = category, subCategory = subcategory, capacity = capacity, color = color,
+                material = material, watt = watt
+            )
         }
+
         Subcategories.Mobiles -> {
             print("Die Kapazität des Handys: ")
             val storage = readlnOrNull() ?: return
             print("Die Farbe des Handys: ")
             val color = readlnOrNull() ?: return
             print("Betriebssystem (Android , IOS):")
-            val os=readlnOrNull() ?:return
+            val os = readlnOrNull() ?: return
             println("Die Menge eingeben:")
-            val qty= readln().toInt()
-            Mobiles(name,price,storage=storage,color=color,operatingSystem=os,qty=qty)
+            val qty = readln().toInt()
+            Mobiles(name, price, storage = storage, color = color, operatingSystem = os, qty = qty)
 
         }
+
         Subcategories.TVs -> {
             print("Die Auflösung des TV  (HD, UHD, 4K): ")
             val resolution = readlnOrNull() ?: return print("Ungültige Eingabe")
@@ -533,18 +676,107 @@ fun addNewProduct() {
             val size = readlnOrNull()?.toIntOrNull() ?: return print("Ungültige Eingabe")
             TVs(name, price, category = category, subCategory = subcategory, resolution = resolution, size = size)
         }
+
         else -> return
     }
-    var ourProducts:MutableList<Products> = mutableListOf()
-    ourProducts.add(product)
 
-
-//println("${product.name}  ${product.price} ${Mobiles(name, price, storage = storage, color = color)}" )
-    // The product has been successfully created, you can add it to a list of products or store it in a database
-    println("Das Produkt wurde erfolgreich hinzugefügt!")
-    println("Produkt:${ourProducts[ourProducts.indexOf(product)].name} , " +
-            "Preis:${ourProducts[ourProducts.indexOf(product)].price}" )
+    val finalProducts = finalProductsList.add(product)
+    println("Das Produkt wurde erfolgreich hinzugefügt!\n")
 }
 
+/*
+------------------------------------------------1. Produkt löschen------------------------------------------------------
+*/
+fun deleteProduct() {
+    sortedProducts()
+    println("Zu welcher Kategorie gehört das Produkt:")
+    Categories.values().forEachIndexed { index, category ->
+        println("${index + 1}. ${category.name}")
+    }
+    val categoryIndex = readlnOrNull()?.toIntOrNull()?.minus(1) ?: return
+    val category = Categories.values().getOrNull(categoryIndex) ?: return
+    /*
+    --------------------------------1.4. Eine Unterkategorie muss ausgewählt werden----------------------------------------
+     */
+    println("Zu welcher Unterkategorie gehört das Produkt:")
+    category.subcategories.forEachIndexed { index, subcategory ->
+        println("${index + 1}. ${subcategory.name}")
+    }
+    val subcategoryIndex = readlnOrNull()?.toIntOrNull()?.minus(1) ?: return
+    val subcategory = category.subcategories.getOrNull(subcategoryIndex) ?: return
 
 
+    val matchingProducts = finalProductsList.filter { it.category == category && it.subCategory == subcategory }
+    if (matchingProducts.isEmpty()) {
+        println("No products found matching category $category and subcategory $subcategory.")
+        return
+    }
+    println("Please choose a product to delete:")
+    for ((index, product) in matchingProducts.withIndex()) {
+        println("${index + 1}. ${product.name}")
+    }
+    val userInput = readlnOrNull()?.toIntOrNull()
+    if (userInput == null || userInput !in 1..matchingProducts.size) {
+        println("Invalid input.")
+        return
+    }
+    val productToDelete = matchingProducts[userInput - 1]
+    finalProductsList.remove(productToDelete)
+    println("Das Produkt '${productToDelete.name}' wurde erfolgreich gelöscht.")
+}
+/*
+Die Methode 'sortedProducts' sortiert die Liste der Produkte anhand einer Bedienung (in diesem Fall) nach dem Preis des
+Produkts.
+Danach wird die Liste in einer bestimmten Form angezeigt, um eine bessere sichtbar für die Kunden
+*/
+
+fun sortedProducts() {//Original
+    val sortedProductsList=finalProductsList.sortedBy { it.subCategory }.sortedBy { it.price }
+    var currentCategory: Categories? = null // variable to keep track of the current category
+    var currentSubcategory: Subcategories? = null
+    finalProductsList.forEach { product ->
+        if (product.category != currentCategory) {  // if the category changes
+            println("\nKategorie: ${product.category}") // print the category
+            currentCategory = product.category // update the current category
+            currentSubcategory = null // reset the current subcategory
+        }
+
+        if (product.subCategory != currentSubcategory) { // if the subcategory changes
+            println("\nUnterkategorie: ${product.subCategory}") // print the subcategory
+            when (product) {
+                is Microwaves -> println("%-3s %-20s %-10s %-20s %-10s %-20s %-10s %s".format("ID", "Name", "Price", "Color", "Capacity", "Material", "Watt", "Qty")) // print the header for Microwaves
+                is Mobiles -> println("%-3s %-30s %-10s %-10s %-10s %-10s %s".format("ID", "Name", "Price", "Color", "Storage", "OperatingSystem", "Qty")) // print the header for Mobiles
+                is TVs -> println("%-3s %-30s %-10s %-10s %-10s %s".format("ID", "Name", "Price", "Size", "Resolution", "Qty")) // print the header for TVs
+                is Shoes-> println("%-3s %-30s %-10s %-10s %-10s %-10s %s".format("ID", "Name", "Price", "Size", "Gender", "Color", "Qty"))
+                else -> println("%-3s %-60s %-10s %-10s %-10s %-10s %s".format("ID", "Name", "Price", "Size", "Gender", "Color", "Qty")) // print the header for other products
+            }
+            currentSubcategory = product.subCategory // update the current subcategory
+        }
+
+        when (product) {
+            is TShirts -> println("%-3d %-60s %-10.2f %-10s %-10s %-10s %d".format(finalProductsList.indexOf(product), product.name, product.price, product.size, product.gender, product.color, product.qty))
+            is Shoes -> println("%-3d %-30s %-10.2f %-10s %-10s %-10s %d".format(finalProductsList.indexOf(product), product.name, product.price, product.size, product.gender, product.color, product.qty))
+            is Trousers -> println("%-3d %-60s %-10.2f %-10s %-10s %-10s %d".format(finalProductsList.indexOf(product), product.name, product.price, product.size, product.gender, product.color, product.qty))
+            is Microwaves -> println("%-3d %-20s %-10.2f %-20s %-10s %-20s %-10d %d".format(finalProductsList.indexOf(product), product.name, product.price, product.color, product.capacity, product.material, product.watt, product.qty))
+            is Mobiles -> println("%-3d %-30s %-10.2f".format(finalProductsList.indexOf(product), product.name, product.price, product.color, product.storage, product.operatingSystem, product.qty))
+            is TVs-> println("%-3d %-30s %-10.2f".format(finalProductsList.indexOf(product),product.name,product.price,product.size,product.resolution))
+        }
+    }
+}
+
+/*
+group by
+val productsByCategoryAndSubcategory = finalProductsList.groupBy { product ->
+    Pair(product.category, product.subCategory)
+}
+
+// Print the products for each category and subcategory
+productsByCategoryAndSubcategory.forEach { (categoryAndSubcategory, products) ->
+    println("\nKategorie: ${categoryAndSubcategory.first}, Unterkategorie: ${categoryAndSubcategory.second}")
+    products.forEach { product ->
+        // Print the details of each product
+        // ...
+    }
+}
+
+ */
