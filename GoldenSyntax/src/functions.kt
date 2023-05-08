@@ -1,6 +1,7 @@
 import benutzer.Users
 import produkte.Categories
 import produkte.Subcategories
+import produkte.products.Products
 import produkte.products.clothes.TShirts
 import produkte.products.clothes.Shoes
 import produkte.products.clothes.Trousers
@@ -440,21 +441,28 @@ fun operatorOption() {
 ----------------------------------------------1. Produkt hinzufügen----------------------------------------------------
 */
 fun addNewProduct() {
+    /*
+---------------------------1.1. Einen Namen des Produkts muss eingegeben werden----------------------------------------
+ */
     print("Name des Produkts: ")
-    val name = readLine() ?: return
-
+    val name = readlnOrNull() ?: return
+    /*
+---------------------------1.2. Einen Preis des Produkts muss eingegeben werden----------------------------------------
+     */
     print("Preis des Produkts: ")
-    val price = readLine()?.toDoubleOrNull() ?: return
-
-    // Prompt the user to select a category
+    val price = readlnOrNull()?.toDoubleOrNull() ?: return
+    /*
+----------------------------------1.3. Eine Kategorie muss ausgewählt werden-------------------------------------------
+    */
     println("Die Kategorie des Produkts:")
     Categories.values().forEachIndexed { index, category ->
         println("${index + 1}. ${category.name}")
     }
     val categoryIndex = readlnOrNull()?.toIntOrNull()?.minus(1) ?: return
     val category = Categories.values().getOrNull(categoryIndex) ?: return
-
-    // Prompt the user to select a subcategory
+/*
+--------------------------------1.4. Eine Unterkategorie muss ausgewählt werden----------------------------------------
+ */
     println("Die Unterkategorie des Produkts:")
     category.subcategories.forEachIndexed { index, subcategory ->
         println("${index + 1}. ${subcategory.name}")
@@ -462,8 +470,8 @@ fun addNewProduct() {
     val subcategoryIndex = readlnOrNull()?.toIntOrNull()?.minus(1) ?: return
     val subcategory = category.subcategories.getOrNull(subcategoryIndex) ?: return
 
-    // Create the appropriate product based on the subcategory
-    val product = when (subcategory) {
+    // Ein passendes Produkt anhand der Unterkategorie erstellen.
+    var product = when (subcategory) {
         Subcategories.Shoes -> {
             print("Die Große der Schuhe: ")
             val size = readlnOrNull()?.toDoubleOrNull() ?: return
@@ -503,28 +511,39 @@ fun addNewProduct() {
             val material = readlnOrNull() ?: return
             print("Die Leistung der Mikrowelle (Watt): ")
             val watt = readlnOrNull()?.toIntOrNull() ?: return
-            Microwaves(name, price, category = category, subCategory = subcategory, capacity = capacity, color = color, material = material, watt = watt)
+            Microwaves(name, price, category = category, subCategory = subcategory, capacity = capacity, color = color,
+                material = material, watt = watt)
         }
         Subcategories.Mobiles -> {
             print("Die Kapazität des Handys: ")
             val storage = readlnOrNull() ?: return
             print("Die Farbe des Handys: ")
             val color = readlnOrNull() ?: return
-            Mobiles(name, price, storage = storage, color = color)
+            print("Betriebssystem (Android , IOS):")
+            val os=readlnOrNull() ?:return
+            println("Die Menge eingeben:")
+            val qty= readln().toInt()
+            Mobiles(name,price,storage=storage,color=color,operatingSystem=os,qty=qty)
 
         }
         Subcategories.TVs -> {
             print("Die Auflösung des TV  (HD, UHD, 4K): ")
-            val resolution = readlnOrNull() ?: return
+            val resolution = readlnOrNull() ?: return print("Ungültige Eingabe")
             print("Die Große des TV: ")
-            val size = readlnOrNull()?.toIntOrNull() ?: return
+            val size = readlnOrNull()?.toIntOrNull() ?: return print("Ungültige Eingabe")
             TVs(name, price, category = category, subCategory = subcategory, resolution = resolution, size = size)
         }
         else -> return
     }
+    var ourProducts:MutableList<Products> = mutableListOf()
+    ourProducts.add(product)
 
+
+//println("${product.name}  ${product.price} ${Mobiles(name, price, storage = storage, color = color)}" )
     // The product has been successfully created, you can add it to a list of products or store it in a database
     println("Das Produkt wurde erfolgreich hinzugefügt!")
+    println("Produkt:${ourProducts[ourProducts.indexOf(product)].name} , " +
+            "Preis:${ourProducts[ourProducts.indexOf(product)].price}" )
 }
 
 

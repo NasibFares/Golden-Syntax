@@ -12,6 +12,7 @@ open class Mobiles(
     subCategory: Subcategories = Subcategories.Mobiles,
     val storage: String,
     val color: String,
-    val operatingSystem: String = listOf("Android", "IOS").random()
-) : Products(name, price, evaluation, category, subCategory) {
+    val operatingSystem: String,
+    qty:Int=0
+) : Products(name, price, evaluation, category, subCategory,qty) {
 }

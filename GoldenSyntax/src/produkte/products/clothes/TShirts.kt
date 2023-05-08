@@ -11,7 +11,8 @@ class TShirts(
     category: Categories = Categories.Clothes,
     subCategory: Subcategories = Subcategories.TShirts,
     val gender: String,
-    val size:String
-    ,val color:String
-) : Products(name, price, evaluation, category, subCategory) {
+    val size:String,
+    val color:String,
+    qty:Int=0
+) : Products(name, price, evaluation, category, subCategory,qty) {
 }

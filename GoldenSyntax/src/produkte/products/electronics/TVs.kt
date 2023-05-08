@@ -11,7 +11,8 @@ class TVs(
     category: Categories = Categories.Electronics,
     subCategory: Subcategories = Subcategories.TVs,
     val resolution: String,
-    val size: Int
-) : Products(name, price, evaluation, category, subCategory) {
+    val size: Int,
+    qty:Int=0
+) : Products(name, price, evaluation, category, subCategory,qty) {
 
 }

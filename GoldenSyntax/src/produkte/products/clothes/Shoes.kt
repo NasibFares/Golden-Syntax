@@ -13,13 +13,11 @@ class Shoes(
 
 
     val size: Double,
-    val gender:String,
-    val art: String= listOf("Sport", "Summer-Classic", "Winter-Classic").random(),
-    val color:String,
+    val gender: String,
+    val art: String = listOf("Sport", "Summer-Classic", "Winter-Classic").random(),
+    val color: String,
+    qty:Int=0
 
 
-
-
-
-) : Products(name, price, evaluation, category, subCategory) {
+    ) : Products(name, price, evaluation, category, subCategory,qty) {
 }
