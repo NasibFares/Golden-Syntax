@@ -680,7 +680,8 @@ fun addNewProduct() {
         else -> return
     }
 
-    val finalProducts = finalProductsList.add(product)
+    finalProductsList.add(product)
+
     println("Das Produkt wurde erfolgreich hinzugefügt!\n")
 }
 
@@ -725,24 +726,31 @@ fun deleteProduct() {
     println("Das Produkt '${productToDelete.name}' wurde erfolgreich gelöscht.")
 }
 /*
-Die Methode 'sortedProducts' sortiert die Liste der Produkte anhand einer Bedienung (in diesem Fall) nach dem Preis des
-Produkts.
-Danach wird die Liste in einer bestimmten Form angezeigt, um eine bessere sichtbar für die Kunden
+Die Methode 'sortedProducts' sortiert die Liste der Produkte anhand der Kategorie und Unterkategorie.
+Danach wird die Liste in einer bestimmten Form angezeigt, um eine bessere sichtbar für die Kunden zu verfügen.
 */
+fun sortedProducts(sortedProducts:MutableList<Products> = mutableListOf()) {
 
-fun sortedProducts() {//Original
-    val sortedProductsList=finalProductsList.sortedBy { it.subCategory }.sortedBy { it.price }
-    var currentCategory: Categories? = null // variable to keep track of the current category
+    //Eine Variable wird erstellt, um die aktuelle Kategorie zu verfolgen.
+    var currentCategory: Categories? = null
+    // Eine Variable wird erstellt, um die aktuelle Unterkategorie zu verfolgen.
     var currentSubcategory: Subcategories? = null
-    finalProductsList.forEach { product ->
-        if (product.category != currentCategory) {  // if the category changes
-            println("\nKategorie: ${product.category}") // print the category
-            currentCategory = product.category // update the current category
-            currentSubcategory = null // reset the current subcategory
+    // Für jede Produkte in der Liste 'finalProductsList'.
+    sortedProducts.forEach { product ->
+        // Wenn die Kategorie sich ändert.
+        if (product.category != currentCategory) {
+            // Gib den Namen der Kategorie in der Konsole.
+            println("\nKategorie: ${product.category}")
+            // Die aktuelle Kategorie aktualisieren aktuelle Kategorie = Die Kategorie des Produkts.
+            currentCategory = product.category
+            // Die aktuelle Unterkategorie zurücksetzen.
+            currentSubcategory = null
         }
-
-        if (product.subCategory != currentSubcategory) { // if the subcategory changes
-            println("\nUnterkategorie: ${product.subCategory}") // print the subcategory
+        // Wenn die Unterkategorie der aktuellen Kategorie sich ändert.
+        if (product.subCategory != currentSubcategory) {
+            // Gib die neue Unterkategorie in der Konsole
+            println("\nUnterkategorie: ${product.subCategory}")
+            // Hier sind die Einstellungen des Headers für jede Unterkategorie:
             when (product) {
                 is Microwaves -> println("%-3s %-20s %-10s %-20s %-10s %-20s %-10s %s".format("ID", "Name", "Price", "Color", "Capacity", "Material", "Watt", "Qty")) // print the header for Microwaves
                 is Mobiles -> println("%-3s %-30s %-10s %-10s %-10s %-10s %s".format("ID", "Name", "Price", "Color", "Storage", "OperatingSystem", "Qty")) // print the header for Mobiles
@@ -750,9 +758,10 @@ fun sortedProducts() {//Original
                 is Shoes-> println("%-3s %-30s %-10s %-10s %-10s %-10s %s".format("ID", "Name", "Price", "Size", "Gender", "Color", "Qty"))
                 else -> println("%-3s %-60s %-10s %-10s %-10s %-10s %s".format("ID", "Name", "Price", "Size", "Gender", "Color", "Qty")) // print the header for other products
             }
-            currentSubcategory = product.subCategory // update the current subcategory
+            // Die aktuelle Unterkategorie aktualisieren aktuelle Unterkategorie= Die Unterkategorie des Produkts.
+            currentSubcategory = product.subCategory
         }
-
+        //Hier sind die Einstellungen für die Abstände zwischen den Spalten, die die Informationen des Produkts enthalten.
         when (product) {
             is TShirts -> println("%-3d %-60s %-10.2f %-10s %-10s %-10s %d".format(finalProductsList.indexOf(product), product.name, product.price, product.size, product.gender, product.color, product.qty))
             is Shoes -> println("%-3d %-30s %-10.2f %-10s %-10s %-10s %d".format(finalProductsList.indexOf(product), product.name, product.price, product.size, product.gender, product.color, product.qty))
@@ -763,20 +772,26 @@ fun sortedProducts() {//Original
         }
     }
 }
-
 /*
-group by
-val productsByCategoryAndSubcategory = finalProductsList.groupBy { product ->
-    Pair(product.category, product.subCategory)
-}
-
-// Print the products for each category and subcategory
-productsByCategoryAndSubcategory.forEach { (categoryAndSubcategory, products) ->
-    println("\nKategorie: ${categoryAndSubcategory.first}, Unterkategorie: ${categoryAndSubcategory.second}")
-    products.forEach { product ->
-        // Print the details of each product
-        // ...
+In der Methode 'productsSortingMethod' könnte der Benutzer die Weise auswählen, wie die Produkte sortiert werden sollen.
+Hiermit sind zwei Möglichkeiten verfügbar:
+1. Nach dem Preis des Produkts.
+2. Nach dem Namen des Produkts.
+ */
+fun productsSortingMethod(){
+    println("Wählen Sie die Art und Weise, wie die Produkte sortiert werden sollen:\n" +
+            "1. Nach dem Preis des Produkt\n" +
+            "2. Nach dem Namen des Produkts")
+    val sortOption=readln().toInt()
+    if(sortOption==1){
+        val sortedProducts = finalProductsList.sortedWith(compareBy({ it.category }, {it.subCategory},{ it.price })).toMutableList()
+        sortedProducts(sortedProducts)
+    }else if (sortOption==2){
+        val sortedProducts = finalProductsList.sortedWith(compareBy({ it.category }, {it.subCategory},{ it.name })).toMutableList()
+        sortedProducts(sortedProducts)
     }
 }
 
- */
+
+
+

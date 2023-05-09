@@ -6,9 +6,9 @@ fun main() {
     user = me
     userList.add(user)
     //registerLoginLogout()
-  //addNewProduct()
-    deleteProduct()
-//println(finalProductsList)
+    //addNewProduct()
+    //deleteProduct()
+  productsSortingMethod()
 
 }
 
