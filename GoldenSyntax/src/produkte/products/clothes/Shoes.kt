@@ -16,7 +16,7 @@ class Shoes(
     val gender: String,
     val art: String = listOf("Sport", "Summer-Classic", "Winter-Classic").random(),
     val color: String,
-    qty:Int=0
+    qty:Int
 
 
     ) : Products(name, price, evaluation, category, subCategory,qty) {

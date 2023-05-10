@@ -13,6 +13,6 @@ open class Mobiles(
     val storage: String,
     val color: String,
     val operatingSystem: String,
-    qty:Int=0
+    qty:Int
 ) : Products(name, price, evaluation, category, subCategory,qty) {
 }

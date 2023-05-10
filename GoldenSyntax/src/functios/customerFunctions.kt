@@ -8,13 +8,29 @@ import kotlin.system.exitProcess
 /*
 ----------------------------------------3. Ein Produkt suchen(Kunde Option)---------------------------------------------
 */
-fun customerOptions() {
+fun customerOptions(){
+    var cartIntern: MutableList<Products> = mutableListOf()
+    var shoppedQtyList: MutableList<Int> = mutableListOf()
     var option: Int
+    var totalPrice = 0.0
+    var itemQty = 0
+
+
     do {
+
         var trials = 0
         val maxTrials = 2
+
+        for (i in cartIntern.indices){
+            totalPrice += finalProductsList[i].price * shoppedQtyList[i]
+            itemQty += shoppedQtyList[i]
+        }
+
         do {
+
+
             println("**Herzlich Willkommen in unserem Golden-Syntax**")
+            println("Wahrenkorb: Artikelmenge $itemQty , GesamtPreis: $totalPrice\n")
             println("Wählen Sie eine Option aus:")
             println("1. Gesamtübersicht aller Produkte.")
             println("2. Produkt anhand seines Namens suchen.")
@@ -37,14 +53,22 @@ fun customerOptions() {
             2 -> searchProductByName()
             3 -> searchProductByCategory()
             4 -> searchProductBySubCategory()
-            5 -> Customers().addProductToCart()
+            5 -> {
+                val test: Pair<MutableList<Int>,MutableList<Products>> = Customers("", "", "", 13, "", false, finalProductsList,"",0.0).addProductToCart(cartIntern)
+                (cartIntern) = test.second
+                shoppedQtyList = test.first
+            }
             6 -> buyProduct()
-            7 -> exitProcess(0)
+            7 -> {
+                //TODO: returnProduktFromCartShop
+                exitProcess(0)
+            }
             else -> println("Ungültige Eingabe")
         }
-    } while (option != 7)
-}
 
+    } while (option != 7)
+
+}
 fun searchProductByName(): List<Products>? {
     print("Geben Sie bitte die ersten Buchstaben des Produkts ein: ")
     val name = readln().lowercase()

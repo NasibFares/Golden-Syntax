@@ -1,13 +1,14 @@
+import benutzer.Customers
 import benutzer.Users
 import functios.*
 
-
+val operator = Users("Nasib", "Fares", "operator@gmail.com", 45, "test", true)
+val normalCustomer=Users("jack","jack","customer@gmail.com",15,"test",false)
+val customer= Customers("","","",13,"",false, finalProductsList,"",0.0)
 fun main() {
-    val me = Users("Nasib", "Fares", "operator@gmail.com", 45, "Operator2023", true)
-    val customer:Users=Users("jack","jack","jack@gmail.com",15,"Jack2023",false)
 
-    userList.add(me)
-    userList.add(customer)
+    userList.add(operator)
+    userList.add(normalCustomer)
   registerLoginLogout()
 
 

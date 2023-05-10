@@ -13,6 +13,6 @@ class TShirts(
     val gender: String,
     val size:String,
     val color:String,
-    qty:Int=0
+    qty:Int
 ) : Products(name, price, evaluation, category, subCategory,qty) {
 }
