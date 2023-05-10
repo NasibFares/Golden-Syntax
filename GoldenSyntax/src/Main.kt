@@ -3,20 +3,24 @@ import functios.*
 
 
 fun main() {
-    val me = Users("Nasib", "Fares", "nasib.y.fares@gmail.com", 45, "Nasib1978", true)
+    val me = Users("Nasib", "Fares", "operator@gmail.com", 45, "Operator2023", true)
     val customer:Users=Users("jack","jack","jack@gmail.com",15,"Jack2023",false)
 
     userList.add(me)
     userList.add(customer)
-    registerLoginLogout()
+  registerLoginLogout()
+
+
     if (user.adminRight){
         operatorOption()
     }else{
-        kundeOptionen()
+        customerOptions()
     }
+
+
     //addNewProduct()
   //deleteProduct()
-  //productsSortingMethod()
+
     //productReorder()
 
 

@@ -9,6 +9,7 @@ fun operatorOption() {
         var trials = 0
         val maxTrials = 2
         do {
+            println("**Herzlich Willkommen in unserem Golden-Syntax**")
             println("Wählen Sie eine Aufgabe aus:")
             println("1. Ein Produkt hinzufügen.")
             println("2. Ein Produkt löschen.")

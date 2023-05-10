@@ -14,14 +14,6 @@ open class Products(
     var category: Categories,
     val subCategory: Subcategories,
     var qty:Int=0
-) {
-    var ourProducts: MutableList<Products> = mutableListOf()
-
-    private var reviews = mutableListOf<String>() //z.B reviews=[2,4.4,5,]
-    fun addReview(review: String) {
-        reviews.add(review)
-        evaluation = reviews.map { it.toDouble() }.average()
-    }
+) {}
 
 
-}

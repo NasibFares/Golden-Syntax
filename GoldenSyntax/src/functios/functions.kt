@@ -103,10 +103,13 @@ fun logIn(): Boolean {
             if (user != null) {
                 val adminRight = user.adminRight
                 if (adminRight) {
-                    println("Sie haben sich erfolgreich als [${user.firstName} ${user.lastName}]:Operator angemeldet.")
+                    println("Sie haben sich erfolgreich als [${user.firstName} ${user.lastName}]:Operator angemeldet.\n")
+                    Thread.sleep(1000)
                     operatorOption()
                 } else {
-                    println("Sie haben sich erfolgreich als [${user.firstName} ${user.lastName}]:Kundin/e angemeldet.")
+                    println("Sie haben sich erfolgreich als [${user.firstName} ${user.lastName}]:Kundin/e angemeldet.\n")
+                    Thread.sleep(1000)
+                    customerOptions()
                 }
                 return true
             }
@@ -171,6 +174,7 @@ fun register() {
                         println("2.Nachname:${user.lastName}")
                         println("3.e-Mail:${user.eMail}")
                         println("4.Alter:${user.age}")
+
                     }
                 }
             }
@@ -379,193 +383,7 @@ fun checkPassword(): Boolean {
 
 
 
-/*
-Die Methode 'sortedProducts' sortiert die Liste der Produkte anhand der Kategorie und Unterkategorie.
-Danach wird die Liste in einer bestimmten Form angezeigt, um eine bessere sichtbar für die Kunden zu verfügen.
-*/
-fun sortedProducts(sortedProducts: MutableList<Products> = mutableListOf()) {
 
-    //Eine Variable wird erstellt, um die aktuelle Kategorie zu verfolgen.
-    var currentCategory: Categories? = null
-    // Eine Variable wird erstellt, um die aktuelle Unterkategorie zu verfolgen.
-    var currentSubcategory: Subcategories? = null
-    // Für jede Produkte in der Liste 'finalProductsList'.
-    sortedProducts.forEach { product ->
-        // Wenn die Kategorie sich ändert.
-        if (product.category != currentCategory) {
-            // Gib den Namen der Kategorie in der Konsole.
-            println("\nKategorie: ${product.category}")
-            // Die aktuelle Kategorie aktualisieren aktuelle Kategorie = Die Kategorie des Produkts.
-            currentCategory = product.category
-            // Die aktuelle Unterkategorie zurücksetzen.
-            currentSubcategory = null
-        }
-        // Wenn die Unterkategorie der aktuellen Kategorie sich ändert.
-        if (product.subCategory != currentSubcategory) {
-            // Gib die neue Unterkategorie in der Konsole
-            println("\nUnterkategorie: ${product.subCategory}")
-            // Hier sind die Einstellungen des Headers für jede Unterkategorie:
-            when (product) {
-                is Microwaves -> println(
-                    "%-3s %-20s %-10s %-20s %-10s %-20s %-10s %s".format(
-                        "ID",
-                        "Name",
-                        "Price",
-                        "Color",
-                        "Capacity",
-                        "Material",
-                        "Watt",
-                        "Qty"
-                    )
-                ) // print the header for Microwaves
-                is Mobiles -> println(
-                    "%-3s %-30s %-10s %-10s %-10s %-10s %s".format(
-                        "ID",
-                        "Name",
-                        "Price",
-                        "Color",
-                        "Storage",
-                        "OperatingSystem",
-                        "Qty"
-                    )
-                ) // print the header for Mobiles
-                is TVs -> println(
-                    "%-3s %-30s %-10s %-10s %-10s %s".format(
-                        "ID",
-                        "Name",
-                        "Price",
-                        "Size",
-                        "Resolution",
-                        "Qty"
-                    )
-                ) // print the header for TVs
-                is Shoes -> println(
-                    "%-3s %-30s %-10s %-10s %-10s %-10s %s".format(
-                        "ID",
-                        "Name",
-                        "Price",
-                        "Size",
-                        "Gender",
-                        "Color",
-                        "Qty"
-                    )
-                )
-
-                else -> println(
-                    "%-3s %-60s %-10s %-10s %-10s %-10s %s".format(
-                        "ID",
-                        "Name",
-                        "Price",
-                        "Size",
-                        "Gender",
-                        "Color",
-                        "Qty"
-                    )
-                ) // print the header for other products
-            }
-            // Die aktuelle Unterkategorie aktualisieren aktuelle Unterkategorie= Die Unterkategorie des Produkts.
-            currentSubcategory = product.subCategory
-        }
-        //Hier sind die Einstellungen für die Abstände zwischen den Spalten, die die Informationen des Produkts enthalten.
-        when (product) {
-            is TShirts -> println(
-                "%-3d %-60s %-10.2f %-10s %-10s %-10s %d".format(
-                    finalProductsList.indexOf(product),
-                    product.name,
-                    product.price,
-                    product.size,
-                    product.gender,
-                    product.color,
-                    product.qty
-                )
-            )
-
-            is Shoes -> println(
-                "%-3d %-30s %-10.2f %-10s %-10s %-10s %d".format(
-                    finalProductsList.indexOf(product),
-                    product.name,
-                    product.price,
-                    product.size,
-                    product.gender,
-                    product.color,
-                    product.qty
-                )
-            )
-
-            is Trousers -> println(
-                "%-3d %-60s %-10.2f %-10s %-10s %-10s %d".format(
-                    finalProductsList.indexOf(
-                        product
-                    ), product.name, product.price, product.size, product.gender, product.color, product.qty
-                )
-            )
-
-            is Microwaves -> println(
-                "%-3d %-20s %-10.2f %-20s %-10s %-20s %-10d %d".format(
-                    finalProductsList.indexOf(
-                        product
-                    ),
-                    product.name,
-                    product.price,
-                    product.color,
-                    product.capacity,
-                    product.material,
-                    product.watt,
-                    product.qty
-                )
-            )
-
-            is Mobiles -> println(
-                "%-3d %-30s %-10.2f".format(
-                    finalProductsList.indexOf(product),
-                    product.name,
-                    product.price,
-                    product.color,
-                    product.storage,
-                    product.operatingSystem,
-                    product.qty
-                )
-            )
-
-            is TVs -> println(
-                "%-3d %-30s %-10.2f".format(
-                    finalProductsList.indexOf(product),
-                    product.name,
-                    product.price,
-                    product.size,
-                    product.resolution
-                )
-            )
-        }
-    }
-}
-
-/*
-In der Methode 'productsSortingMethod' könnte der Benutzer die Weise auswählen, wie die Produkte sortiert werden sollen.
-Hiermit sind zwei Möglichkeiten verfügbar:
-1. Nach dem Preis des Produkts.
-2. Nach dem Namen des Produkts.
-Die Methode 'sortedProducts' wird innerhalb dieser Methode aufgerufen.
- */
-fun productsSortingMethod() {
-    println(
-        "Wählen Sie die Art und Weise, wie die Produkte sortiert werden sollen:\n" +
-                "1. Nach dem Preis des Produkt\n" +
-                "2. Nach dem Namen des Produkts"
-    )
-    val sortOption = readln().toInt()
-    if (sortOption == 1) {
-        val sortedProducts =
-            finalProductsList.sortedWith(compareBy({ it.category }, { it.subCategory }, { it.price }))
-                .toMutableList()
-        sortedProducts(sortedProducts)
-    } else if (sortOption == 2) {
-        val sortedProducts =
-            finalProductsList.sortedWith(compareBy({ it.category }, { it.subCategory }, { it.name }))
-                .toMutableList()
-        sortedProducts(sortedProducts)
-    }
-}
 
 
 

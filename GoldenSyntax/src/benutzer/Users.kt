@@ -15,19 +15,8 @@ open class Users(
 ) {
 
 
-    var usersList: MutableList<Users> = mutableListOf()
-
-
 }
 
 
-/*
-fun isValidEmail(email: String): Boolean {
-    return emailPattern.matches(email)
-fun isValidPassword(password: String): Boolean {
-    return passwordPattern.matches(password)
-}
-}
 
- */
 
