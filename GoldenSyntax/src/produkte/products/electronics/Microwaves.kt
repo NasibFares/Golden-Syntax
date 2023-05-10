@@ -13,7 +13,7 @@ class Microwaves(
     val capacity: String,
     val color: String,
     val material:String,
-    val watt: Int,
+    val watt: String,
     qty:Int=0
 ) : Products(name, price, evaluation, category, subCategory,qty) {
 }
