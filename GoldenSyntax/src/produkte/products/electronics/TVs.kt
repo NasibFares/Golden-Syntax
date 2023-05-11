@@ -2,7 +2,7 @@ package produkte.products.electronics
 
 import produkte.Categories
 import produkte.Subcategories
-import produkte.products.Products
+import produkte.products.Store
 
 class TVs(
     name: String,
@@ -13,6 +13,6 @@ class TVs(
     val resolution: String,
     val size: Int,
     qty:Int
-) : Products(name, price, evaluation, category, subCategory,qty) {
+) : Store(name, price, evaluation, category, subCategory,qty) {
 
 }

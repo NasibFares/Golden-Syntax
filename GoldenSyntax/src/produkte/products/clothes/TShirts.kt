@@ -2,7 +2,7 @@ package produkte.products.clothes
 
 import produkte.Categories
 import produkte.Subcategories
-import produkte.products.Products
+import produkte.products.Store
 
 class TShirts(
     name: String,
@@ -14,5 +14,5 @@ class TShirts(
     val size:String,
     val color:String,
     qty:Int
-) : Products(name, price, evaluation, category, subCategory,qty) {
+) : Store(name, price, evaluation, category, subCategory,qty) {
 }

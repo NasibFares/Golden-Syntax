@@ -1,15 +1,6 @@
 package functios
 
 import benutzer.Users
-import produkte.Categories
-import produkte.Subcategories
-import produkte.products.Products
-import produkte.products.clothes.TShirts
-import produkte.products.clothes.Shoes
-import produkte.products.clothes.Trousers
-import produkte.products.electronics.Mobiles
-import produkte.products.electronics.Microwaves
-import produkte.products.electronics.TVs
 import kotlin.system.exitProcess
 
 var user = Users("", "", "", 0, "", false)
@@ -180,7 +171,8 @@ fun register() {
             }
         }
     }
-
+    Thread.sleep(1200)
+    customerOptions()
 }
 
 

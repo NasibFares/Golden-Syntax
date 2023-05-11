@@ -2,7 +2,7 @@ package produkte.products.clothes
 
 import produkte.Categories
 import produkte.Subcategories
-import produkte.products.Products
+import produkte.products.Store
 
 class Shoes(
     name: String,
@@ -14,10 +14,9 @@ class Shoes(
 
     val size: Double,
     val gender: String,
-    val art: String = listOf("Sport", "Summer-Classic", "Winter-Classic").random(),
     val color: String,
-    qty:Int
+    qty: Int
 
 
-    ) : Products(name, price, evaluation, category, subCategory,qty) {
+) : Store(name, price, evaluation, category, subCategory,qty) {
 }

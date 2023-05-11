@@ -1,9 +1,10 @@
 package benutzer
-
-import functios.finalProductsList
-import produkte.products.Products
+import produkte.products.Store
+data class PaymentOptions(val name: String, var balance: Double)
 /*
-Die Klasse 'Customers'→ "Die Kunden des Shops" hat die Eigenschaften 'name'→ Name der Kunde, 'age'→ Alter der Kunde,
+Die Klasse 'Customers'→ "Die Kunden des Shops" erbt die Eigenschaften 'firsName'→ Vorname der Kunde, 'lastName'→
+Nachname der Kunde, 'eMail'→ die e-Mail Adresse der Kunde, 'age'→ Alter der Kunde,'passWord'→ Kennwort der Kunde,
+'adminRight'→ Berichtigung der Benutzer (Operator,Kunde) vom der Mutterklasse 'Users', zusätzlich hat sie die Eigenschaften
 paymentMethod→ Zahlungsmethode, 'cart'→ Warenkorb der Kunde, 'accountBalance'→ Kontostand der Kunde
  */
 class Customers(
@@ -13,38 +14,16 @@ class Customers(
     age: Int,
     passWord: String,
     adminRight:Boolean=false,
-    var shoppingCart:MutableList<Products> = mutableListOf() ,
-    val paymentMethod: String,
-    var accountBalance: Double = 0.0
+    var shoppingCart:MutableList<Store> = mutableListOf(),
+    val paymentMethod: MutableMap<Int, PaymentOptions> = mutableMapOf(
+        1 to PaymentOptions("Lastschrift", 0.0),
+        2 to PaymentOptions("PayPal", 0.0),
+        3 to PaymentOptions("Kreditkarte", 0.0))
+
 ) : Users(firstName, lastName, eMail, age,passWord, adminRight) {
 
-    /*
-    Die Methode 'addToCart' ermöglicht dem Kunden, die lieblingsprodukte in Warenkorb hinzufügen.
-    Als Parameter übernimmt diese Methode 'product→ bezieht sich auf ein Produkt von der Liste Produkte'
-     */
-    open fun addProductToCart(shoppingCart: MutableList<Products>): Pair<MutableList<Int>, MutableList<Products>> {
-        println("Geben Sie bitte die ID des Produkts:")
-        val addedProductID = readln().toIntOrNull()
-        var addedQtys: MutableList<Int> = mutableListOf()
-        if (addedProductID != null) {
-            shoppingCart.add(finalProductsList[addedProductID])
-            println("Wie viele Stücke möchten Sie?")
-            val qty = readln().toIntOrNull()
-            if (qty != null) { //Meine Menge
-                if (finalProductsList[addedProductID].qty - qty >= 0) {
-                    addedQtys.add(qty)
-                    finalProductsList[addedProductID].qty -= qty
-                    println("${finalProductsList[addedProductID].name}wurde erfolgreich $qty mal im gesamt wehrt von ${finalProductsList[addedProductID].price * qty} € zu deinem Wahrenkorb hinzufügt.")
-                }
-            }
-        }
-        return Pair(addedQtys, shoppingCart)
-    }
 
-    //TODO:
-    fun returnProduktToShop(qtyBought: MutableList<Int>, myCart: MutableList<Products>) {
-        //for(i in )
-    }
+
 }
 /*
     Die Methode 'removeFromCart' ermöglicht dem Kunden, ein Produkt im Warenkorb zu löschen.

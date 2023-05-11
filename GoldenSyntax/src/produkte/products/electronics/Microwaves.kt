@@ -2,7 +2,7 @@ package produkte.products.electronics
 
 import produkte.Categories
 import produkte.Subcategories
-import produkte.products.Products
+import produkte.products.Store
 
 class Microwaves(
     name: String,
@@ -15,5 +15,5 @@ class Microwaves(
     val material:String,
     val watt: String,
     qty:Int
-) : Products(name, price, evaluation, category, subCategory,qty) {
+) : Store(name, price, evaluation, category, subCategory,qty) {
 }

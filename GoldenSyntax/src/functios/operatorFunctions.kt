@@ -1,6 +1,7 @@
 package functios
 
 import produkte.Categories
+import produkte.products.finalProductsList
 import kotlin.system.exitProcess
 
 fun operatorOption() {

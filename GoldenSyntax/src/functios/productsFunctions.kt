@@ -1,93 +1,16 @@
 package functios
-
 import produkte.Categories
 import produkte.Subcategories
-import produkte.products.Products
+import produkte.products.Store
 import produkte.products.clothes.Shoes
 import produkte.products.clothes.TShirts
 import produkte.products.clothes.Trousers
 import produkte.products.electronics.Microwaves
 import produkte.products.electronics.Mobiles
 import produkte.products.electronics.TVs
+import produkte.products.finalProductsList
 
-var finalProductsList: MutableList<Products> = mutableListOf(
-    Mobiles(
-        "Samsung Galaxy A24 4G", 200.0,
-        3.4, Categories.Electronics, Subcategories.Mobiles, "128GB", "Green",
-        "Android",55
-    ),
-    Mobiles(
-        "Huawei Enjoy 60X", 230.0, 4.1, Categories.Electronics, Subcategories.Mobiles,
-        "128GB", "Red", "Android",25
-    ), Mobiles(
-        "Apple iPhone 14 Pro Max",
-        1294.38, 4.6, Categories.Electronics, Subcategories.Mobiles, "128GB",
-        "Black",
-        "IOS",5
-    ), TVs(
-        "Fire TV 2-Series", 175.0, 3.6, Categories.Electronics,
-        Subcategories.TVs, "HD", 40,1
-    ), TVs(
-        "Sony Bravia", 799.0, 4.0,
-        Categories.Electronics, Subcategories.TVs, "4K", 50,3
-    ), TVs(
-        "Toshiba", 549.99, 4.0, Categories.Electronics, Subcategories.TVs,
-        "4K", 65,50
-    ),
-    Microwaves(
-        "Toshiba", 109.0, 4.4, Categories.Electronics, Subcategories.Microwaves,
-        "23L",
-        "Black", "Glass", "800",120
-    ),
-    Microwaves(
-        "Sharp", 96.89, 4.4, Categories.Electronics, Subcategories.Microwaves,
-        "20l", "Black", "Plastic", "2200",14
-    ), Microwaves(
-        "Bosch",
-        153.48,
-        4.6,
-        Categories.Electronics,
-        Subcategories.Microwaves,
-        "20L",
-        "stainless steel",
-        "stainless steel",
-        "800",7
-    ), Trousers(
-        "Vans Leggings CHALKBOARD CLASSIC LEGGINGS", 34.99, 4.3, Categories.Clothes,
-        Subcategories.Trousers, "Women", 34, "Black",25
-    ), Trousers(
-        "Tazzio Cargohose 16610 Stretch mit Elasthan, Regular Fit", 29.90, 4.3,
-        Categories.Clothes, Subcategories.Trousers, "Men", 36, "Braun",17
-    ),
-    Trousers(
-        "Next Stoffhose Senior Tapered Trousers (1-tlg)", 19.0, 3.8, Categories.Clothes,
-        Subcategories.Trousers, "Children", 24, "Black",0
-    ),
-    TShirts(
-        "Classic Basics Kurzarmshirt Shirt (1-tlg)", 9.0, 4.0,
-        Categories.Clothes, Subcategories.TShirts, "Women", "M", "Green",9
-    ),
-    TShirts(
-        "Tommy Jeans Plus T-Shirt TJM PLUS ", 33.99, 4.1, Categories.Clothes,
-        Subcategories.TShirts, "Men", "XL", "Grey",24
-    ),
-    TShirts(
-        "Converse Kurzarmshirt", 17.99, 3.8, Categories.Clothes, Subcategories.TShirts,
-        "Children", "S", "Red",16
-    ),
-    Shoes(
-        "Vans Ward Sneaker", 63.99, 4.5, Categories.Clothes, Subcategories.Shoes,
-        36.5, "Women", "Sport", "Black",8
-    ),
-    Shoes(
-        "SAGUARO Barfußschuh", 52.99, 4.0, Categories.Clothes, Subcategories.Shoes,
-        40.0, "Men", "Summer-Classic", "Black",4
-    ),
-    Shoes(
-        "Kappa Sneaker", 25.99, 4.4, Categories.Clothes, Subcategories.Shoes,
-        34.0, "Children", "Sport", "White",7
-    )
-)
+
 /*
 -------------------------------------------------2.Produkte Abteilung--------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------
@@ -699,7 +622,8 @@ fun addNewProduct() {
 Die Methode 'sortedProducts' sortiert die Liste der Produkte anhand der Kategorie und Unterkategorie.
 Danach wird die Liste in einer bestimmten Form angezeigt, um eine bessere sichtbar für die Kunden zu verfügen.
 */
-fun sortedProducts(sortedProducts: MutableList<Products> = mutableListOf()) {
+fun sortedProducts(sortedProducts: MutableList<Store> = mutableListOf()) {
+
 
     //Eine Variable wird erstellt, um die aktuelle Kategorie zu verfolgen.
     var currentCategory: Categories? = null
@@ -735,7 +659,7 @@ fun sortedProducts(sortedProducts: MutableList<Products> = mutableListOf()) {
                     )
                 ) // print the header for Microwaves
                 is Mobiles -> println(
-                    "%-3s %-30s %-10s %-10s %-10s %-10s %s".format(
+                    "%-3s %-30s %-10s %-10s %-10s %-16s %s".format(
                         "ID",
                         "Name",
                         "Price",
@@ -746,7 +670,7 @@ fun sortedProducts(sortedProducts: MutableList<Products> = mutableListOf()) {
                     )
                 ) // print the header for Mobiles
                 is TVs -> println(
-                    "%-3s %-30s %-10s %-10s %-10s %s".format(
+                    "%-3s %-30s %-10s %-10s %-11s %s".format(
                         "ID",
                         "Name",
                         "Price",
@@ -832,7 +756,7 @@ fun sortedProducts(sortedProducts: MutableList<Products> = mutableListOf()) {
             )
 
             is Mobiles -> println(
-                "%-3d %-30s %-10.2f".format(
+                "%-3d %-30s %-12.2f%-10s %-10s %-15s %s".format(
                     finalProductsList.indexOf(product),
                     product.name,
                     product.price,
@@ -844,12 +768,13 @@ fun sortedProducts(sortedProducts: MutableList<Products> = mutableListOf()) {
             )
 
             is TVs -> println(
-                "%-3d %-30s %-10.2f".format(
+                "%-3d %-30s %-12.2f%-10s %-10s %s".format(
                     finalProductsList.indexOf(product),
                     product.name,
                     product.price,
                     product.size,
-                    product.resolution
+                    product.resolution,
+                    product.qty
                 )
             )
         }
@@ -863,12 +788,11 @@ Hiermit sind zwei Möglichkeiten verfügbar:
 2. Nach dem Namen des Produkts.
 Die Methode 'sortedProducts' wird innerhalb dieser Methode aufgerufen.
  */
-fun productsSortingMethod() {
-    println(
-        "Wählen Sie die Art und Weise, wie die Produkte sortiert werden sollen:\n" +
-                "1. Nach dem Preis des Produkt\n" +
-                "2. Nach dem Namen des Produkts"
-    )
+fun productsSortingMethod(){
+    println("Hier finden Sie Ihr Wunschprodukt, welches Sortiment zu Ihnen passt?:\n" +
+            "1. Sortiment (basierend auf dem Preis des Produkts).\n" +
+            "2. Sortiment (basierend auf dem Namen des Produkts).\n" +
+            "3. Sortiment (basierend auf die Anzahl des Produkts.)")
     val sortOption = readln().toInt()
     if (sortOption == 1) {
         val sortedProducts =
@@ -880,22 +804,12 @@ fun productsSortingMethod() {
             finalProductsList.sortedWith(compareBy({ it.category }, { it.subCategory }, { it.name }))
                 .toMutableList()
         sortedProducts(sortedProducts)
+    }else if(sortOption==3){
+        val sortedProducts =
+        finalProductsList.sortedWith(compareBy({ it.category }, { it.subCategory }, { it.qty }))
+            .toMutableList()
+        sortedProducts(sortedProducts)
     }
 }
-/*
-fun buyProduct(product: Products, isDirectPurchase: Boolean = true) {
 
-    if (isDirectPurchase) {
-        if (accountBalance >= product.price) {
-            accountBalance -= product.price
-            // Perform purchase logic here
-            println("You have purchased ${product.name} for ${product.price}. Your new account balance is $accountBalance.")
-        } else {
-            println("Insufficient funds. Please add money to your account.")
-        }
-    } else {
-        cart.add(product)
-        println("${product.name} has been added to your cart.")
-    }
-}
-*/
+

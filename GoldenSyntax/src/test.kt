@@ -1,16 +1,3 @@
-import benutzer.Customers
-import produkte.Categories
-import produkte.products.Products
-import produkte.Subcategories
-import produkte.products.electronics.Mobiles
-import produkte.products.electronics.TVs
-import kotlin.concurrent.thread
-
-
-
-
-
-
 /*fun registerOrlogin() {
 
     var firstname= customer.firstName
